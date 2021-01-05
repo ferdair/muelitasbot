@@ -201,28 +201,30 @@ async function handleDialogFlowAction(
 
         case "Saludo.action":
             let userData = await getUserData(sender);
-            sendGenericMessage(sender, [{
-                title: `Hola + ${userData.first_name}.`,
-                image_url: 'https://image.freepik.com/vector-gratis/dibujo-dentista_23-2147494574.jpg',
-                subtitle: ' ¿Cómo te podemos ayudar?',
-                buttons: [{
-                        type: "postback",
-                        title: "Reservar una cita",
-                        payload: "reservar_cita"
-                    },
-                    {
-                        type: "postback",
-                        title: "Cancelar una cita",
-                        payload: "cancelar_cita"
-                    }
-                ]
-            }, ]);
-            break;
+            /*sendGenericMessage(sender, 'Hola desde el webhook'
+              [{
+                               title: `Hola + ${userData.first_name}.`,
+                               image_url: 'https://image.freepik.com/vector-gratis/dibujo-dentista_23-2147494574.jpg',
+                               subtitle: ' ¿Cómo te podemos ayudar?',
+                               buttons: [{
+                                       type: "postback",
+                                       title: "Reservar una cita",
+                                       payload: "reservar_cita"
+                                   },
+                                   {
+                                       type: "postback",
+                                       title: "Cancelar una cita",
+                                       payload: "cancelar_cita"
+                                   }
+                               ]
+                           }, ]*/
+    );
+    break;
 
-        default:
-            //unhandled action, just send back the text
-            handleMessages(messages, sender);
-    }
+    default:
+    //unhandled action, just send back the text
+    handleMessages(messages, sender);
+}
 }
 
 async function handleMessage(message, sender) {
