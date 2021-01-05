@@ -17,6 +17,7 @@ let pacienteSchema = new Schema({
         type: String,
         unique: true
     },
+    profilePic: String,
 
     cedula: {
         type: String,
@@ -24,6 +25,6 @@ let pacienteSchema = new Schema({
         maxlength: [10, 'La cédula debe contener 10 números']
     }
 
-})
+}, { timestamps: true });
 pacienteSchema.plugin(uniqueValidator, { message: '{PATH} debe ser único por cada persona' });
 module.exports = mongoose.model('Paciente', pacienteSchema)
