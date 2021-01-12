@@ -200,8 +200,23 @@ async function handleDialogFlowAction(
             break;*/
 
         case "Saludo.action":
-            let userData = await getUserData(sender);
-
+            //let userData = await getUserData(sender);
+            sendGenericMessage(sender, [{
+                title: `Hola desde el webhook`,
+                image_url: `https://image.freepik.com/vector-gratis/dibujo-dentista_23-2147494574.jpg`,
+                subtitle: `Sutitle desde el webhook`,
+                buttons: [{
+                        type: "postback",
+                        title: "Reservar cita",
+                        payload: "reservar_cita",
+                    },
+                    {
+                        type: "postback",
+                        title: "Cancelar cita",
+                        payload: "cancelar_cita",
+                    },
+                ],
+            }, ]);
             break;
 
         default:
