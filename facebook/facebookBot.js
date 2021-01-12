@@ -113,7 +113,7 @@ async function receivedMessage(event) {
         handleQuickReply(senderId, quickReply, messageId);
         return;
     }
-    saveUserData(senderId);
+    //saveUserData(senderId);
 
     if (messageText) {
         //send message to dialogflow
