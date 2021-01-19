@@ -221,8 +221,10 @@ async function handleDialogFlowAction(
             break;
 
         case "Cita.action": //enviar todo el payload
-            console.log(dias.DiasDisponibles);
-            sendQuickReply(sender, '¿Qué día desea reservar la cita?', dias.DiasDisponibles)
+            let replies = [];
+            replies = dias.DiasDisponibles();
+            console.log(replies);
+            sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
             break;
 
         default:
