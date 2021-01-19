@@ -9,6 +9,7 @@ const axios = require("axios");
 const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
+const dias = require("../citas/diasDisponibles")
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -154,7 +155,7 @@ async function setSessionAndUser(senderId) {
         throw error;
     }
 }
-
+//manejo de quickreplies
 async function handleQuickReply(senderId, quickReply, messageId) {
     let quickReplyPayload = quickReply.payload;
     console.log(
@@ -217,6 +218,10 @@ async function handleDialogFlowAction(
                     },
                 ],
             }, ]);
+            break;
+
+        case "Cita.action":
+            sendQuickReply(sender, '¿Qué día desea reservar la cita?', dias.DiasDisponibles)
             break;
 
         default:
