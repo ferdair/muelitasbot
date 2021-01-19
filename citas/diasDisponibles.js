@@ -10,18 +10,20 @@ function DiasDisponibles() {
     let hora = today.hour();
     //let hora = 10;
     //let dia = 'miercoles';
-    console.log('Hora:', hora);
+    //console.log('Hora:', hora);
 
     //si la hora sigue en el horario de trabajo, se puede reservar en esa hora
     if (hora >= 8 && hora < 16) {
         //añadir tambien el dia actual
-        console.log('Todavia hay chance hoy\n');
-        restDays.push(today.format('dddd D'));
-    } else {
-        //añadir desde el dia siguiente a hoy
-        console.log('No hay chance. venga mañana\n');
+        //console.log('Todavia hay chance hoy\n');
+        let replyToday = {
+            "content_type": "text",
+            "title": today.format('dddd D'),
+            "payload": today.format('dddd D')
+        }
 
-        //switch (today.format('dddd')) {
+        restDays.push(replyToday);
+
         switch (today.format('dddd')) {
             case 'lunes':
                 for (var i = 1; i < 6; i++) {
@@ -31,8 +33,13 @@ function DiasDisponibles() {
                 break;
             case 'martes':
                 for (var i = 1; i < 5; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
 
+                    let reply = {
+                        "content_type": "text",
+                        "title": today.add(1, 'day').format('dddd D'),
+                        "payload": today.add(1, 'day').format('dddd D')
+                    }
+                    restDays.push(reply);
                 }
                 break;
             case 'miercoles':
@@ -66,6 +73,12 @@ function DiasDisponibles() {
                 }
                 break;
         }
+    } else {
+        //añadir desde el dia siguiente a hoy
+        //console.log('No hay chance. venga mañana\n');
+
+        //switch (today.format('dddd')) {
+
     }
 
     //return today.format('dddd');

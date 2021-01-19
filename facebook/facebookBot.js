@@ -221,12 +221,7 @@ async function handleDialogFlowAction(
             break;
 
         case "Cita.action": //enviar todo el payload
-            sendQuickReply(sender, '¿Qué día desea reservar la cita?', [{
-                "content_type": "text",
-                "title": "Lunes",
-                "payload": "lunes>",
-
-            }])
+            sendQuickReply(sender, '¿Qué día desea reservar la cita?', DiasDisponibles)
             break;
 
         default:
