@@ -23,7 +23,7 @@ function DiasDisponibles() {
     if (hour >= 8 && hour < 16) {
         var tdy = today.format('dddd D');
         var tdyReply = {
-            "content_type": "text",
+            "content_type": "postback",
             "title": tdy,
             "payload": tdy
         }
@@ -36,7 +36,7 @@ function DiasDisponibles() {
         for (i = 0; i < 6; i++) {
             var tdy = today.add(1, 'days').format('dddd D');
             var day = {
-                    "content_type": "text",
+                    "content_type": "postback",
                     "title": tdy,
                     "payload": tdy
                 }
@@ -48,7 +48,7 @@ function DiasDisponibles() {
     for (i = idxDay + 1; i < 6; i++) {
         var tdy = today.add(1, 'days').format('dddd D');
         var day = {
-                "content_type": "text",
+                "content_type": "postback",
                 "title": tdy,
                 "payload": tdy
             }
