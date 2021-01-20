@@ -2,88 +2,61 @@ var moment = require('moment');
 
 function DiasDisponibles() {
     let today = moment();
+
+    //let today = moment("20210130", "YYYYMMDD"); //para probar XD
     today.locale('es');
 
     let restDays = [];
+    let hour = today.hour();
 
-    //hora actual
-    let hora = today.hour();
-    //let hora = 10;
-    //let dia = 'miercoles';
-    //console.log('Hora:', hora);
+    //              0       1           2           3          4        5           6
+    let week = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 
-    //si la hora sigue en el horario de trabajo, se puede reservar en esa hora
-    if (hora >= 8 && hora < 16) {
-        //añadir tambien el dia actual
-        //console.log('Todavia hay chance hoy\n');
-        let replyToday = {
+    //dia actual que coincide con algun día de la semana
+    let eqDay = week.find(day => today.format('dddd') === day);
+
+    //index del día de la semana(week)
+    let idxDay = week.indexOf(eqDay);
+    console.log(`Coincide: ${eqDay} índice: ${idxDay}`);
+
+    //si la hora actual está entre las 8 am y 3pm tambien se añade el dia actual 
+    if (hour >= 8 && hour < 16) {
+        var tdy = today.format('dddd D');
+        var tdyReply = {
             "content_type": "text",
-            "title": today.format('dddd D'),
-            "payload": today.format('dddd D')
+            "title": tdy,
+            "payload": tdy
         }
-
-        restDays.push(replyToday);
-
-        switch (today.format('dddd')) {
-            case 'lunes':
-                for (var i = 1; i < 6; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-            case 'martes':
-                for (var i = 1; i < 5; i++) {
-
-                    let reply = {
-                        "content_type": "text",
-                        "title": today.add(1, 'day').format('dddd D'),
-                        "payload": today.add(1, 'day').format('dddd D')
-                    }
-                    restDays.push(reply);
-                }
-                break;
-            case 'miercoles':
-                for (var i = 1; i < 4; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-            case 'jueves':
-                for (var i = 1; i < 3; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-            case 'viernes':
-                for (var i = 1; i < 2; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-            case 'sabado':
-                for (var i = 1; i < 1; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-            case 'domingo':
-                for (var i = 1; i <= 6; i++) {
-                    restDays.push(today.add(1, 'day').format('dddd D'));
-
-                }
-                break;
-        }
-    } else {
-        //añadir desde el dia siguiente a hoy
-        //console.log('No hay chance. venga mañana\n');
-
-        //switch (today.format('dddd')) {
+        restDays.push(tdyReply);
 
     }
 
-    //return today.format('dddd');
+    if (idxDay === 6) { //si es domingo, mando toda la semana en adelante
+        //suponiendo que domingo no trabaja. Sino <7
+        for (i = 0; i < 6; i++) {
+            var tdy = today.add(1, 'days').format('dddd D');
+            var day = {
+                    "content_type": "text",
+                    "title": tdy,
+                    "payload": tdy
+                }
+                //console.log(today.add(1, 'days').format('dddd D'));
+            restDays.push(day);
+        }
+    }
+    //suponiendo que domingo no trabaja. Sino <7
+    for (i = idxDay + 1; i < 6; i++) {
+        var tdy = today.add(1, 'days').format('dddd D');
+        var day = {
+                "content_type": "text",
+                "title": tdy,
+                "payload": tdy
+            }
+            //console.log(today.add(1, 'days').format('dddd D'));
+        restDays.push(day);
+    }
+    //retorno los días restantes  disponibles en los que trabaja
     return restDays;
-
 }
 
 module.exports = {
