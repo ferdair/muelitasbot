@@ -235,7 +235,10 @@ async function handleDialogFlowAction(
         case "Cita.dia.action":
             let dia = parameters.date - time;
             console.log(`Dia: ${dia}`);
-            sendTextMessage(sender, `HA ELEGIDO ${dia}`);
+            sendTextMessage(sender, `HA ELEGIDO ${dia}`).then(mensaje => console.log(mensaje))
+                .catch(err => {
+                    console.log(err);
+                });
 
             break;
 
@@ -503,7 +506,8 @@ async function sendGenericMessage(recipientId, elements) {
  * Send a message with Quick Reply buttons.
  *
  */
-async function sendQuickReply(recipientId, text, replies, metadata) {
+async function
+sendQuickReply(recipientId, text, replies, metadata) {
     var messageData = {
         recipient: {
             id: recipientId,
