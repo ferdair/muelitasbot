@@ -216,6 +216,11 @@ async function handleDialogFlowAction(
                         title: "Cancelar cita",
                         payload: "cancelar_cita",
                     },
+                    {
+                        type: "postback",
+                        title: "Horario de atencion",
+                        payload: "Horario",
+                    }
                 ],
             }, ]);
             break;
@@ -225,6 +230,13 @@ async function handleDialogFlowAction(
             replies = dias.DiasDisponibles();
             console.log(replies);
             sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
+            break;
+
+        case "Cita.dia.action":
+            let dia = parameters.date - time;
+            console.log(`Dia: ${dia}`);
+            sendTextMessage(sender, `HA ELEGIDO ${dia}`);
+
             break;
 
         default:
