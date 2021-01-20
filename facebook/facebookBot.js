@@ -235,10 +235,10 @@ async function handleDialogFlowAction(
         case "Cita.dia.action":
             let dia = parameters.date - time;
             console.log(`Dia: ${dia}`);
-            sendTextMessage(sender, `HA ELEGIDO ${dia}`).then(mensaje => console.log(mensaje))
+            /* sendTextMessage(sender, `HA ELEGIDO ${dia}`).then(mensaje => console.log(mensaje))
                 .catch(err => {
                     console.log(err);
-                });
+                });*
 
             break;
 
@@ -442,195 +442,195 @@ async function sendTextMessage(recipientId, text) {
  * Send an image using the Send API.
  *
  */
-async function sendImageMessage(recipientId, imageUrl) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        message: {
-            attachment: {
-                type: "image",
-                payload: {
-                    url: imageUrl,
-                },
-            },
-        },
-    };
-    await callSendAPI(messageData);
-}
-
-/*
- * Send a button message using the Send API.
- *
- */
-async function sendButtonMessage(recipientId, text, buttons) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "button",
-                    text: text,
-                    buttons: buttons,
-                },
-            },
-        },
-    };
-    await callSendAPI(messageData);
-}
-
-//envia mensaje tipo carrusel
-async function sendGenericMessage(recipientId, elements) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "generic",
-                    elements: elements,
-                },
-            },
-        },
-    };
-
-    await callSendAPI(messageData);
-}
-
-/*
- * Send a message with Quick Reply buttons.
- *
- */
-async function
-sendQuickReply(recipientId, text, replies, metadata) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        message: {
-            text: text,
-            metadata: isDefined(metadata) ? metadata : "",
-            quick_replies: replies,
-        },
-    };
-
-    await callSendAPI(messageData);
-}
-
-/*
- * Turn typing indicator on
- *
- */
-function sendTypingOn(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        sender_action: "typing_on",
-    };
-
-    callSendAPI(messageData);
-}
-
-/*
- * Turn typing indicator off
- *
- */
-function sendTypingOff(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId,
-        },
-        sender_action: "typing_off",
-    };
-
-    callSendAPI(messageData);
-}
-
-/*
- * Call the Send API. The message data goes in the body. If successful, we'll
- * get the message id in a response
- *
- */
-function callSendAPI(messageData) {
-    return new Promise((resolve, reject) => {
-        request({
-                uri: "https://graph.facebook.com/v6.0/me/messages",
-                qs: {
-                    access_token: config.FB_PAGE_TOKEN,
-                },
-                method: "POST",
-                json: messageData,
-            },
-            function(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var recipientId = body.recipient_id;
-                    var messageId = body.message_id;
-
-                    if (messageId) {
-                        console.log(
-                            "Successfully sent message with id %s to recipient %s",
-                            messageId,
-                            recipientId
-                        );
-                    } else {
-                        console.log(
-                            "Successfully called Send API for recipient %s",
-                            recipientId
-                        );
-                    }
-                    resolve();
-                } else {
-                    reject();
-                    console.error(
-                        "Failed calling Send API",
-                        response.statusCode,
-                        response.statusMessage,
-                        body.error
-                    );
-                }
+            async function sendImageMessage(recipientId, imageUrl) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    message: {
+                        attachment: {
+                            type: "image",
+                            payload: {
+                                url: imageUrl,
+                            },
+                        },
+                    },
+                };
+                await callSendAPI(messageData);
             }
-        );
-    });
-}
 
-async function receivedPostback(event) {
-    var senderId = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
+            /*
+             * Send a button message using the Send API.
+             *
+             */
+            async function sendButtonMessage(recipientId, text, buttons) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    message: {
+                        attachment: {
+                            type: "template",
+                            payload: {
+                                template_type: "button",
+                                text: text,
+                                buttons: buttons,
+                            },
+                        },
+                    },
+                };
+                await callSendAPI(messageData);
+            }
 
-    var payload = event.postback.payload;
-    switch (payload) {
-        default:
-        //unindentified payload
-            sendToDialogFlow(senderId, payload);
-        break;
-    }
+            //envia mensaje tipo carrusel
+            async function sendGenericMessage(recipientId, elements) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    message: {
+                        attachment: {
+                            type: "template",
+                            payload: {
+                                template_type: "generic",
+                                elements: elements,
+                            },
+                        },
+                    },
+                };
 
-    console.log(
-        "Received postback for user %d and page %d with payload '%s' " + "at %d",
-        senderId,
-        recipientID,
-        payload,
-        timeOfPostback
-    );
-}
+                await callSendAPI(messageData);
+            }
 
-function isDefined(obj) {
-    if (typeof obj == "undefined") {
-        return false;
-    }
+            /*
+             * Send a message with Quick Reply buttons.
+             *
+             */
+            async function
+            sendQuickReply(recipientId, text, replies, metadata) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    message: {
+                        text: text,
+                        metadata: isDefined(metadata) ? metadata : "",
+                        quick_replies: replies,
+                    },
+                };
 
-    if (!obj) {
-        return false;
-    }
+                await callSendAPI(messageData);
+            }
 
-    return obj != null;
-}
+            /*
+             * Turn typing indicator on
+             *
+             */
+            function sendTypingOn(recipientId) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    sender_action: "typing_on",
+                };
 
-module.exports = router;
+                callSendAPI(messageData);
+            }
+
+            /*
+             * Turn typing indicator off
+             *
+             */
+            function sendTypingOff(recipientId) {
+                var messageData = {
+                    recipient: {
+                        id: recipientId,
+                    },
+                    sender_action: "typing_off",
+                };
+
+                callSendAPI(messageData);
+            }
+
+            /*
+             * Call the Send API. The message data goes in the body. If successful, we'll
+             * get the message id in a response
+             *
+             */
+            function callSendAPI(messageData) {
+                return new Promise((resolve, reject) => {
+                    request({
+                            uri: "https://graph.facebook.com/v6.0/me/messages",
+                            qs: {
+                                access_token: config.FB_PAGE_TOKEN,
+                            },
+                            method: "POST",
+                            json: messageData,
+                        },
+                        function(error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                var recipientId = body.recipient_id;
+                                var messageId = body.message_id;
+
+                                if (messageId) {
+                                    console.log(
+                                        "Successfully sent message with id %s to recipient %s",
+                                        messageId,
+                                        recipientId
+                                    );
+                                } else {
+                                    console.log(
+                                        "Successfully called Send API for recipient %s",
+                                        recipientId
+                                    );
+                                }
+                                resolve();
+                            } else {
+                                reject();
+                                console.error(
+                                    "Failed calling Send API",
+                                    response.statusCode,
+                                    response.statusMessage,
+                                    body.error
+                                );
+                            }
+                        }
+                    );
+                });
+            }
+
+            async function receivedPostback(event) {
+                var senderId = event.sender.id;
+                var recipientID = event.recipient.id;
+                var timeOfPostback = event.timestamp;
+
+                var payload = event.postback.payload;
+                switch (payload) {
+                    default:
+                    //unindentified payload
+                        sendToDialogFlow(senderId, payload);
+                    break;
+                }
+
+                console.log(
+                    "Received postback for user %d and page %d with payload '%s' " + "at %d",
+                    senderId,
+                    recipientID,
+                    payload,
+                    timeOfPostback
+                );
+            }
+
+            function isDefined(obj) {
+                if (typeof obj == "undefined") {
+                    return false;
+                }
+
+                if (!obj) {
+                    return false;
+                }
+
+                return obj != null;
+            }
+
+            module.exports = router;
