@@ -56,7 +56,7 @@ function DiasDisponibles() {
         restDays.push(day);
     }
     //retorno los días restantes  disponibles en los que trabaja
-    return restDays;
+    return JSON.stringify(restDays);
 }
 
 module.exports = {
