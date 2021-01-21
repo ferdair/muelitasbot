@@ -217,15 +217,18 @@ async function handleDialogFlowAction(
         case "Dia.action":
             let dia = parameters.fields.date;
             let user = await getUserData(sender);
-            let strDia = JSON.stringify(dia).stringValue;
+            let strDia = JSON.stringify(dia);
 
-            console.log(`strDia: ${strDia}`);
+            console.log(`Stringify dia ${strDia}`);
+
+            let fecha = strDia.stringValue;
+            console.log(fecha);
 
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
             //let msgId = messages.id;
-            console.log(`Dia: ${dia}`);
-            const dateTimeStart = new Date(Date.parse(strDia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
+            //console.log(`Dia: ${dia}`);
+            const dateTimeStart = new Date(Date.parse(fecha.split('T')[0] + 'T' + fecha.split('T')[1].split('-')[0] + timeZoneOffset));
             //const dateTimeStart = new Date(Date.parse(dia));
             console.log(`dateTimeStart: ${dateTimeStart}`);
 
