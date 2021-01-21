@@ -242,9 +242,9 @@ async function handleDialogFlowAction(
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
             //let msgId = messages.id;
-            console.log(`Dia: ${Date.parse(dia)}`);
+            console.log(`Dia: ${Date.parse(date)}`);
             //const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
-            const dateTimeStart = new Date(Date.parse(dia));
+            const dateTimeStart = new Date(Date.parse(date));
 
 
             const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
