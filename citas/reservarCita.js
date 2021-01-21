@@ -30,7 +30,7 @@ const serviceAccountAuth = new google.auth.JWT({
 const calendar = google.calendar('v3');
 process.env.DEBUG = 'dialogflow:*'; // enables lib debugging statements
 
-const timeZone = 'America/New_York';
+const timeZone = 'America/Guayaquil';
 const timeZoneOffset = '-05:00';
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
@@ -90,3 +90,5 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
         });
     });
 }
+
+module.export = { createCalendarEvent }

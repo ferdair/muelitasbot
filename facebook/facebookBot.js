@@ -9,7 +9,8 @@ const axios = require("axios");
 const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
-const dias = require("../citas/diasDisponibles")
+const dias = require("../citas/diasDisponibles");
+const calEvent = require("../citas/reservarCita");
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -234,13 +235,21 @@ async function handleDialogFlowAction(
             break;
 
         case "Dia.action":
-            let dia = parameters.fields.date;
+            let dia = JSON.stringify(parameters.fields.date);
+            let userData = await getUserData(sender);
             //let msgId = messages.id;
             console.log(`Dia: ${JSON.stringify(dia)}`);
-            /* sendTextMessage(sender, `HA ELEGIDO ${dia}`).then(mensaje => console.log(mensaje))
-                .catch(err => {
-                    console.log(err);
-                });*/
+            const dateTimeStart = new Date(Date.parse(dia.stringValue.split('T')[0] + 'T' + dia.stringValue.split('T')[1].split('-')[0] + timeZoneOffset));
+            const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
+            const appointmentTimeString = dateTimeStart.toLocaleString(
+                'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+            );
+            // Check the availability of the time, and make an appointment if there is time on the calendar
+            calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${userData.first_name} ${lastName}`).then(() => {
+                sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
+            }).catch(() => {
+                sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
+            });
 
             break;
 
