@@ -1,9 +1,9 @@
 'use strict';
 
 // Import the Dialogflow module from Google client libraries.
-const functions = require('firebase-functions');
+//const functions = require('firebase-functions');
 const { google } = require('googleapis');
-const { WebhookClient } = require('dialogflow-fulfillment');
+//const { WebhookClient } = require('dialogflow-fulfillment');
 
 // Enter your calendar ID below and service account JSON below
 const calendarId = "tohttlt7u5vbiodk5ovsq6e9ik@group.calendar.google.com";
@@ -34,7 +34,7 @@ const timeZone = 'America/Guayaquil';
 const timeZoneOffset = '-05:00';
 
 // Set the DialogflowApp object to handle the HTTPS POST request.
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+/*exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
     const agent = new WebhookClient({ request, response });
     console.log("Parameters", agent.parameters);
     const appointment_type = agent.parameters.motivo;
@@ -58,7 +58,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     let intentMap = new Map();
     intentMap.set('calendario3', makeAppointment);
     agent.handleRequest(intentMap);
-});
+});*/
 
 //Creates calendar event in Google Calendar
 function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
