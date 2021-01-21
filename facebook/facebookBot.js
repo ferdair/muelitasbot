@@ -242,8 +242,11 @@ async function handleDialogFlowAction(
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
             //let msgId = messages.id;
-            console.log(`Dia: ${JSON.stringify(dia)}`);
-            const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
+            console.log(`Dia: ${Date.parse(dia)}`);
+            //const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
+            const dateTimeStart = new Date(Date.parse(dia));
+
+
             const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
             const appointmentTimeString = dateTimeStart.toLocaleString(
                 'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
