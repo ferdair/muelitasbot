@@ -234,7 +234,7 @@ async function handleDialogFlowAction(
             break;
 
         case "Dia.action":
-            let dia = parameters.date - time;
+            let dia = parameters.date;
             //let msgId = messages.id;
             console.log(`Dia: ${dia}`);
             /* sendTextMessage(sender, `HA ELEGIDO ${dia}`).then(mensaje => console.log(mensaje))
