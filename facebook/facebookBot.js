@@ -237,7 +237,7 @@ async function handleDialogFlowAction(
 
         case "Dia.action":
             let dia = JSON.stringify(parameters.fields.date);
-            let userData = await getUserData(sender);
+            let user = await getUserData(sender);
 
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
@@ -249,7 +249,7 @@ async function handleDialogFlowAction(
                 'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
             );
             // Check the availability of the time, and make an appointment if there is time on the calendar
-            calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${userData.first_name} ${lastName}`).then(() => {
+            calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
                 sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
             }).catch(() => {
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
