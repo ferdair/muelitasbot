@@ -180,34 +180,13 @@ async function handleDialogFlowAction(
     parameters
 ) {
     switch (action) {
-        //acciones según los accion de dialogflo
-        /*case "Helados.info.action":
-            let icecreamName = parameters.fields.icecreamName.stringValue;
-            let icecreamInfo = await Product.findOne({ name: icecreamName });
-            sendGenericMessage(sender, [{
-                title: icecreamInfo.name + " $" + icecreamInfo.price,
-                image_url: icecreamInfo.img,
-                subtitle: icecreamInfo.description,
-                buttons: [{
-                        type: "postback",
-                        title: "Hacer compra",
-                        payload: "hacer_compra",
-                    },
-                    {
-                        type: "postback",
-                        title: "Ver más helados",
-                        payload: "ver_mas_helados",
-                    },
-                ],
-            }, ]);
-            break;*/
 
         case "Saludo.action":
             let userData = await getUserData(sender);
             sendGenericMessage(sender, [{
                 title: `Hola ${userData.first_name}!`,
                 image_url: `https://image.freepik.com/vector-gratis/dibujo-dentista_23-2147494574.jpg`,
-                subtitle: `Como te podemos ayudar?`,
+                subtitle: `¿Cómo te podemos ayudar?`,
                 buttons: [{
                         type: "postback",
                         title: "Reservar cita",
@@ -232,22 +211,22 @@ async function handleDialogFlowAction(
             replies = dias.DiasDisponibles();
             //console.log(replies);
             //sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
-            sendTextMessage(sender, '¿Qué día desea reservar la cita?');
+            sendTextMessage(sender, '¿Qué día deseas reservar la cita?');
             break;
 
         case "Dia.action":
             let dia = parameters.fields.date;
             let user = await getUserData(sender);
-            let strDia = JSON.stringify(dia);
+            let strDia = JSON.stringify(dia).stringValue;
 
-            console.log(`strDia: ${strDia}`)
+            console.log(`strDia: ${strDia}`);
 
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
             //let msgId = messages.id;
             console.log(`Dia: ${dia}`);
-            //const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
-            const dateTimeStart = new Date(Date.parse(dia));
+            const dateTimeStart = new Date(Date.parse(strDia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
+            //const dateTimeStart = new Date(Date.parse(dia));
             console.log(`dateTimeStart: ${dateTimeStart}`);
 
             const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
