@@ -236,7 +236,7 @@ async function handleDialogFlowAction(
             break;
 
         case "Dia.action":
-            let dia = JSON.stringify(parameters.fields.date);
+            let dia = parameters.fields.date;
             let user = await getUserData(sender);
 
             const timeZone = 'America/Guayaquil';
