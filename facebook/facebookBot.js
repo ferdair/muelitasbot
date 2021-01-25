@@ -227,15 +227,15 @@ async function handleDialogFlowAction(
             console.log(`Stringify dia ${strDia}`); //{"stringValue":"2021-01-25T12:00:00-05:00","kind":"stringValue"}
 
             let fecha = {};
-            fecha = strDia;
-            console.log('String value de JSON: ', fecha.stringValue);
+            //fecha = strDia;
+            console.log('String value de fecha de DF: ', dia.stringValue);
 
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
 
-            const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
-            const dateTimeStartJSON = new Date(Date.parse(fecha.stringValue.split('T')[0] + 'T' + fecha.stringValue.split('T')[1].split('-')[0] + timeZoneOffset));
-            const dateTimeStartDATE = new Date(Date.parse(fechaDF.split('T')[0] + 'T' + fechaDF.split('T')[1].split('-')[0] + timeZoneOffset));
+            //const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
+            //const dateTimeStartJSON = new Date(Date.parse(fecha.stringValue.split('T')[0] + 'T' + fecha.stringValue.split('T')[1].split('-')[0] + timeZoneOffset));
+            //const dateTimeStartDATE = new Date(Date.parse(fechaDF.split('T')[0] + 'T' + fechaDF.split('T')[1].split('-')[0] + timeZoneOffset));
 
             //const dateTimeStart = new Date(Date.parse(dia));
             console.log('Intento directo de la fecha que llegA a DF dateTimeStart:', dateTimeStart);
