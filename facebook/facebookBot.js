@@ -216,44 +216,28 @@ async function handleDialogFlowAction(
 
         case "Dia.action":
             let dia = parameters.fields.date;
+            let strFecha = dia.stringValue;
             console.log('Dia desde dialog flow', dia);
-
-            let fechaDF = new Date(Date.parse(dia));
-            console.log(`Fecha que llega  a DF parseada a Date ${fechaDF}`);
+            console.log('String value de fecha de DF: ', strFecha);
 
             let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
-            console.log(`Nombre paciente: ${user.first_name} ${user.last_name}`);
-            let strDia = JSON.stringify(dia);
-            console.log(`Stringify dia ${strDia}`); //{"stringValue":"2021-01-25T12:00:00-05:00","kind":"stringValue"}
-
-            let fecha = {};
-            //fecha = strDia;
-            console.log('String value de fecha de DF: ', dia.stringValue);
-
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
 
-            //const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
-            //const dateTimeStartJSON = new Date(Date.parse(fecha.stringValue.split('T')[0] + 'T' + fecha.stringValue.split('T')[1].split('-')[0] + timeZoneOffset));
-            //const dateTimeStartDATE = new Date(Date.parse(fechaDF.split('T')[0] + 'T' + fechaDF.split('T')[1].split('-')[0] + timeZoneOffset));
+            //2021-01-25T12:00:00-05:00
+            const dateTimeStart = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
 
-            //const dateTimeStart = new Date(Date.parse(dia));
-            console.log('Intento directo de la fecha que llegA a DF dateTimeStart:', dateTimeStart);
-            console.log('Intento de cast de JSON.string VALUE a dateTimeStart:', dateTimeStartJSON);
-            console.log('Intento de cast de DATE(parse(Fecha DF)) a dateTimeStart:', dateTimeStartDATE);
-
-
+            console.log('dateTimeStart:', dateTimeStart);
             const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
             const appointmentTimeString = dateTimeStart.toLocaleString(
                 'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
             );
             // Check the availability of the time, and make an appointment if there is time on the calendar
-            /*calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
+            calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
                 sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
             }).catch(() => {
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
-            });*/
-
+            });
             break;
 
         default:
@@ -436,7 +420,7 @@ async function getUserData(senderId) {
 
 async function sendTextMessage(recipientId, text) {
     if (text.includes("{first_name}") || text.includes("{last_name}")) {
-        let userData = await getUserData(recipientId);
+        let userData = await getUserData(recipientId).catch(err => { console.error('Error: ', err.message) });
         text = text
             .replace("{first_name}", userData.first_name)
             .replace("{last_name}", userData.last_name);
