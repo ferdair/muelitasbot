@@ -219,7 +219,7 @@ async function handleDialogFlowAction(
             let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
 
             let strDia = JSON.stringify(dia);
-            console.log(`Stringify dia ${strDia}`);
+            console.log(`Stringify dia ${strDia}`); //{"stringValue":"2021-01-25T12:00:00-05:00","kind":"stringValue"}
 
             let fecha = {};
             fecha = strDia.stringValue;
@@ -229,7 +229,7 @@ async function handleDialogFlowAction(
             const timeZoneOffset = '-05:00';
             //let msgId = messages.id;
             //console.log(`Dia: ${dia}`);
-            const dateTimeStart = new Date(Date.parse(fecha.split('T')[0] + 'T' + fecha.split('T')[1].split('-')[0] + timeZoneOffset));
+            const dateTimeStart = new Date(Date.parse(dia.split('T')[0] + 'T' + dia.split('T')[1].split('-')[0] + timeZoneOffset));
             //const dateTimeStart = new Date(Date.parse(dia));
             console.log(`dateTimeStart: ${dateTimeStart}`);
 
