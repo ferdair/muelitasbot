@@ -91,4 +91,4 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
     });
 }
 
-module.export = { createCalendarEvent }
+module.exports = { createCalendarEvent }
