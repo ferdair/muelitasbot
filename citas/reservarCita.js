@@ -30,36 +30,6 @@ const serviceAccountAuth = new google.auth.JWT({
 const calendar = google.calendar('v3');
 process.env.DEBUG = 'dialogflow:*'; // enables lib debugging statements
 
-const timeZone = 'America/Guayaquil';
-const timeZoneOffset = '-05:00';
-
-// Set the DialogflowApp object to handle the HTTPS POST request.
-/*exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
-    const agent = new WebhookClient({ request, response });
-    console.log("Parameters", agent.parameters);
-    const appointment_type = agent.parameters.motivo;
-
-    function makeAppointment(agent) {
-        // Calculate appointment start and end datetimes (end = +1hr from start)
-        const dateTimeStart = new Date(Date.parse(agent.parameters.hora.split('T')[0] + 'T' + agent.parameters.hora.split('T')[1].split('-')[0] + timeZoneOffset));
-        const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
-        const appointmentTimeString = dateTimeStart.toLocaleString(
-            'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
-        );
-        // Check the availability of the time, and make an appointment if there is time on the calendar
-        return createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type).then(() => {
-            agent.add(`Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
-        }).catch(() => {
-            agent.add(`Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
-        });
-    }
-
-    // Handle the Dialogflow intent named 'Schedule Appointment'.
-    let intentMap = new Map();
-    intentMap.set('calendario3', makeAppointment);
-    agent.handleRequest(intentMap);
-});*/
-
 //Creates calendar event in Google Calendar
 function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
     return new Promise((resolve, reject) => {
@@ -91,4 +61,22 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
     });
 }
 
-module.exports = { createCalendarEvent }
+
+function getHoraDisponible() {
+
+    let events = [];
+    events = calendar.events.list({
+        auth: serviceAccountAuth, // List events for time period
+        calendarId: calendarId,
+        timeMin: dateTimeStart.toISOString(),
+        timeMax: dateTimeEnd.toISOString()
+    });
+
+    console.log(events);
+
+}
+
+module.exports = {
+    createCalendarEvent,
+    getHoraDisponible
+}

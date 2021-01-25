@@ -11,7 +11,7 @@ const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
 const dias = require("../citas/diasDisponibles");
-const { createCalendarEvent } = require("../citas/reservarCita");
+const { createCalendarEvent, getHoraDisponible } = require("../citas/reservarCita");
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -230,7 +230,7 @@ async function handleDialogFlowAction(
             console.log('dateTimeStart:', dateTimeStart);
             const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
             const appointmentTimeString = dateTimeStart.toLocaleString(
-                'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+                'es-EC', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
             );
             // Check the availability of the time, and make an appointment if there is time on the calendar
             createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
@@ -238,6 +238,10 @@ async function handleDialogFlowAction(
             }).catch(() => {
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
             });
+
+            console.log('========= EVENTOS ==========')
+            console.log(getHoraDisponible());
+
             break;
 
         default:
