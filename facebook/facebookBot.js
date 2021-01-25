@@ -11,7 +11,7 @@ const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
 const dias = require("../citas/diasDisponibles");
-const calEvent = require("../citas/reservarCita");
+const { createCalendarEvent } = require("../citas/reservarCita");
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -233,7 +233,7 @@ async function handleDialogFlowAction(
                 'en-US', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
             );
             // Check the availability of the time, and make an appointment if there is time on the calendar
-            calEvent.createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
+            createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
                 sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
             }).catch(() => {
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
