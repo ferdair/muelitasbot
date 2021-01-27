@@ -69,7 +69,7 @@ function getHoraDisponible(dia) {
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
         timeMin: dia.toISOString(),
-        orderBy: 'startTime',
+
     }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
         const events = res.data.items;
@@ -81,7 +81,7 @@ function getHoraDisponible(dia) {
             });
 
             //retornar fecha y hora para cita 
-            let fechaHoraUltimaCita = events[events.length - 1].end.dateTime;
+            let fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
             //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
             return fechaHoraUltimaCita;
         } else {
