@@ -224,6 +224,8 @@ async function handleDialogFlowAction(
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
 
+            console.log('========= EVENTOS ==========')
+            getHoraDisponible();
             //2021-01-25T12:00:00-05:00
             const dateTimeStart = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
 
@@ -239,8 +241,7 @@ async function handleDialogFlowAction(
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
             });
 
-            console.log('========= EVENTOS ==========')
-            console.log(getHoraDisponible());
+
 
             break;
 

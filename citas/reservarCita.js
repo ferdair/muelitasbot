@@ -65,13 +65,13 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 function getHoraDisponible() {
 
     let events = [];
-    events = calendar.events.list({
-        auth: serviceAccountAuth, // List events for time period
-        calendarId: calendarId,
-        timeMin: dateTimeStart.toISOString(),
-        timeMax: dateTimeEnd.toISOString()
-    });
+    events = calendar.events.list({}).then(function(response) {
+            // Handle the results here (response.result has the parsed body).
+            console.log("Response", response);
+        },
+        function(err) { console.error("Execute error", err); });;
 
+    console.log('Events');
     console.log(events);
 
 }
