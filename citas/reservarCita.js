@@ -64,7 +64,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 
 function getHoraDisponible(dia) {
 
-    let events = [];
+    let fechaHoraUltimaCita;
     calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
@@ -83,13 +83,14 @@ function getHoraDisponible(dia) {
             //retornar fecha y hora para cita 
             let fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
             //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
+            console.log(fechaHoraUltimaCita);
             return fechaHoraUltimaCita;
         } else {
             console.log('No upcoming events found.');
         }
     });
 
-
+    return fechaHoraUltimaCita;
     /*.then(function(response) {
             // Handle the results here (response.result has the parsed body).
 
