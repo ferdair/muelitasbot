@@ -224,8 +224,10 @@ async function handleDialogFlowAction(
             const diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
             console.log('Dia a consultar: ', diaAConsultar);
 
-            console.log('EVENTOS DEL DÍA: ', diaAConsultar)
-            getHoraDisponible(diaAConsultar);
+
+            console.log(`Fecha para agendar cita ${ getHoraDisponible(diaAConsultar)}`);
+            sendTextMessage(sender, `Te podemos agendar una cita el dia ${getHoraDisponible(diaAConsultar)}.`);
+            sendTextMessage(sender, `Si o no? Confirma!`);
 
 
             /*let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });

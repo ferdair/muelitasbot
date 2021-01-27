@@ -65,11 +65,32 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 function getHoraDisponible(dia) {
 
     let events = [];
-    events = calendar.events.list({
+    calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
-        timeMin: dia.toISOString()
-    }).then(function(response) {
+        timeMin: dia.toISOString(),
+        orderBy: 'startTime',
+    }, (err, res) => {
+        if (err) return console.log('The API returned an error: ' + err);
+        const events = res.data.items;
+        if (events.length) {
+            console.log('Upcoming 10 events:');
+            events.map((event, i) => {
+                const start = event.start.dateTime || event.start.date;
+                console.log(`${start} - ${event.summary}`);
+            });
+
+            //retornar fecha y hora para cita 
+            let fechaHoraUltimaCita = events[events.length - 1].end.dateTime;
+            //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
+            return fechaHoraUltimaCita;
+        } else {
+            console.log('No upcoming events found.');
+        }
+    });
+
+
+    /*.then(function(response) {
             // Handle the results here (response.result has the parsed body).
 
             console.log('Desde la response dela petición\n');
@@ -86,7 +107,7 @@ function getHoraDisponible(dia) {
     console.log('DESDE EL ARRAY EVENTS');
     console.log(`El dia ${dia} tiene un total de ${ttlEvDia}\n`);
     console.log('Ultima cita: ', ultimaCita);
-    console.log('Hora fin cita', finCita);
+    console.log('Hora fin cita', finCita);*/
 
 }
 
