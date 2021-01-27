@@ -220,7 +220,15 @@ async function handleDialogFlowAction(
             console.log('Dia desde dialog flow', dia);
             console.log('String value de fecha de DF: ', strFecha);
 
-            let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
+            const timeZoneOffset = '-05:00';
+            const diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
+            console.log('Dia a consultar: ', diaAConsultar);
+
+            console.log('EVENTOS DEL DÍA: ', diaAConsultar)
+            getHoraDisponible(diaAConsultar);
+
+
+            /*let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
             const timeZone = 'America/Guayaquil';
             const timeZoneOffset = '-05:00';
 
@@ -235,11 +243,11 @@ async function handleDialogFlowAction(
                 'es-EC', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
             );
             // Check the availability of the time, and make an appointment if there is time on the calendar
-            createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.lastName}`).then(() => {
+            createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
                 sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
             }).catch(() => {
                 sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
-            });
+            });*/
 
 
 

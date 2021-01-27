@@ -62,20 +62,31 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 }
 
 
-function getHoraDisponible() {
+function getHoraDisponible(dia) {
 
     let events = [];
     events = calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
+        timeMin: dia.toISOString()
     }).then(function(response) {
             // Handle the results here (response.result has the parsed body).
+
+            console.log('Desde la response dela petición\n');
             console.log("Response Items", response.data.items);
+            console.log('Ultima cita: ', response.data.items[response.data.items.length - 1]);
+            console.log('Hora fin cita', finCita);
+            events = response.data.items;
         },
         function(err) { console.error("Execute error", err); });;
 
-    console.log('Events');
-    console.log(events);
+    let ttlEvDia = events.length;
+    let ultimaCita = events[ttlEvDia - 1];
+    let finCita = ultimaCita.end;
+    console.log('DESDE EL ARRAY EVENTS');
+    console.log(`El dia ${dia} tiene un total de ${ttlEvDia}\n`);
+    console.log('Ultima cita: ', ultimaCita);
+    console.log('Hora fin cita', finCita);
 
 }
 
