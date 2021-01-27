@@ -63,8 +63,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 
 
 function getHoraDisponible(dia) {
-
-    let fechaHoraUltimaCita = calendar.events.list({
+    var fechaHoraUltimaCita;
+    calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
         timeMin: dia.toISOString(),
@@ -80,12 +80,14 @@ function getHoraDisponible(dia) {
             });
 
             //retornar fecha y hora para cita 
-            let fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
+            fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
             //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
             console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
-            return fechaHoraUltimaCita;
+
         } else {
             console.log('No upcoming events found.');
+            //sino la hora para la primera cita del día
+            fechaHoraUltimaCita = new Date(new Date(dia).setHours(dia.getMinutes() + 9));
         }
     });
 
