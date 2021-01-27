@@ -65,7 +65,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 function getHoraDisponible() {
 
     let events = [];
-    events = calendar.events.list({}).then(function(response) {
+    events = calendar.events.list({ calendarId: calendarId }).then(function(response) {
             // Handle the results here (response.result has the parsed body).
             console.log("Response", response);
         },
