@@ -265,6 +265,7 @@ async function handleDialogFlowAction(
         case "SiReservar.action":
             console.log('Contextos: ', contexts);
             console.log('Parametros: ', parameters.fields);
+            let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
 
             //obtener parametro del contexto y agendar cita
             let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
@@ -275,7 +276,7 @@ async function handleDialogFlowAction(
             getHoraDisponible(horaAgendar).then((fecha) => {
                 let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
                 let appointmentTimeString = fecha.toLocaleString(
-                    'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+                    'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: 'America/Guayaquil' }
                 );
                 // Check the availability of the time, and make an appointment if there is time on the calendar
                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
