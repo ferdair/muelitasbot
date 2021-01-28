@@ -229,12 +229,10 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
                 console.log(`Fecha para cita desde bot: ${fecha}`);
-                sendTextMessage(sender, 'Te podemos agendar una cita el dia :', fecha);
+                sendTextMessage(sender, `Te podemos agendar una cita el dia ${fecha}`);
                 sendTextMessage(sender, `Si o no? Confirma!`);
 
             })
-
-
 
             /*let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
             const timeZone = 'America/Guayaquil';
@@ -258,6 +256,13 @@ async function handleDialogFlowAction(
             });*/
 
 
+
+            break;
+
+        case "SiReservar.action":
+            console.log('Contextos: ', contexts);
+            console.log('Parametros: ', parameters.fields);
+            sendTextMessage(sender, `Ok, tu cita esta reservada. ${parameters.fields.date} esta agendado!.`);
 
             break;
 
