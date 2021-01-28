@@ -274,8 +274,8 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(horaAgendar).then((fecha) => {
                 let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
-                let appointmentTimeString = dateTimeStart.toLocaleString(
-                    'es-EC', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+                let appointmentTimeString = fecha.toLocaleString(
+                    'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
                 );
                 // Check the availability of the time, and make an appointment if there is time on the calendar
                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
@@ -286,7 +286,7 @@ async function handleDialogFlowAction(
 
             })
 
-            sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaHora} esta agendado!.`);
+            //sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaHora} esta agendado!.`);
 
             break;
 
