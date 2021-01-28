@@ -264,8 +264,24 @@ async function handleDialogFlowAction(
             console.log('Parametros: ', parameters.fields);
 
             //obtener parametro del contexto y agendar cita
-            let fechaHora = contexts[0].parameters.fields;
-            console.log(JSON.stringify(fechaHora));
+            let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
+            console.log(JSON.stringify(fechaHoraAgendar));
+            const timeZoneOffset = '-05:00';
+            const horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + timeZoneOffset));
+
+            getHoraDisponible(horaAgendar).then((fecha) => {
+                const dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
+                const appointmentTimeString = dateTimeStart.toLocaleString(
+                    'es-EC', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
+                );
+                // Check the availability of the time, and make an appointment if there is time on the calendar
+                createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
+                    sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
+                }).catch(() => {
+                    sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
+                });
+
+            })
 
             sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaHora} esta agendado!.`);
 
