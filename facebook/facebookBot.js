@@ -228,6 +228,7 @@ async function handleDialogFlowAction(
 
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
+                console.log(`Fecha para cita desde bot: ${fecha}`);
                 sendTextMessage(sender, 'Te podemos agendar una cita el dia :', fecha);
                 sendTextMessage(sender, `Si o no? Confirma!`);
 
