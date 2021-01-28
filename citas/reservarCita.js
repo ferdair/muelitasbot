@@ -74,8 +74,9 @@ function getHoraDisponible(dia) {
     console.log('Consultar hasta: ', maxDia);
 
 
+    const events;
 
-    let hora = calendar.events.list({
+    calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
         timeMin: minDia.toISOString(),
@@ -83,10 +84,12 @@ function getHoraDisponible(dia) {
         showDeleted: false,
 
     }, (err, res) => {
+        hora = res;
         let fechaHoraUltimaCita;
 
         if (err) return console.log('The API returned an error: ' + err);
-        const events = res.data.items;
+        //const events = res.data.items;
+        events = res.data.items;
         if (events.length) {
             console.log('Upcoming 10 events:');
             events.map((event, i) => {
@@ -95,9 +98,10 @@ function getHoraDisponible(dia) {
             });
 
             //retornar fecha y hora para cita 
+            console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
+
             return fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
             //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
-            console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
 
         } else {
             console.log('No upcoming events found.');
@@ -106,7 +110,7 @@ function getHoraDisponible(dia) {
         }
     });
 
-    return hora;
+    return events;
     /*.then(function(response) {
             // Handle the results here (response.result has the parsed body).
 
