@@ -64,14 +64,15 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 
 function getHoraDisponible(dia) {
 
-    let maxDia = new Date(new Date(dia).setHours(dia.getHours() + 22)); //hasta las 23 hrs
+    let minDia = dia.setHours(00, 00, 00);
+    let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 22)); //hasta las 23 hrs
     let fechaHoraUltimaCita;
     console.log('Consultar hasta: ', maxDia);
 
     calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
-        timeMin: dia.toISOString(),
+        timeMin: minDia.toISOString(),
         timeMax: maxDia.toISOString(),
         showDeleted: false,
 
@@ -93,7 +94,7 @@ function getHoraDisponible(dia) {
         } else {
             console.log('No upcoming events found.');
             //sino la hora para la primera cita del día
-            fechaHoraUltimaCita = new Date(new Date(dia).setHours(dia.getMinutes() + 9));
+            fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
         }
     });
 
