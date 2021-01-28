@@ -66,7 +66,7 @@ function getHoraDisponible(dia) {
 
     let minDia = new Date(new Date(dia).setHours(0)); //desde las 00 horas
     console.log('Consultar desde: ', minDia);
-    let maxDia = new Date(new Date(dia).setHours(22)); //hasta las 22 hrs
+    let maxDia = new Date(new Date(minDia).setHours(22)); //hasta las 22 hrs
     let fechaHoraUltimaCita;
     console.log('Consultar hasta: ', maxDia);
 
