@@ -95,14 +95,14 @@ function getHoraDisponible(dia) {
             });
 
             //retornar fecha y hora para cita 
-            fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
+            return fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
             //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
             console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
 
         } else {
             console.log('No upcoming events found.');
             //sino la hora para la primera cita del día
-            fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
+            return fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
         }
     });
 
