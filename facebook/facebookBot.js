@@ -220,8 +220,8 @@ async function handleDialogFlowAction(
             console.log('Dia desde dialog flow', dia);
             console.log('String value de fecha de DF: ', strFecha);
 
-            const timeZoneOffset = '-05:00';
-            const diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
+            let timeZoneOffset = '-05:00';
+            let diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
             console.log('Dia a consultar: ', diaAConsultar);
 
             console.log(`Fecha para agendar cita`);
@@ -266,8 +266,8 @@ async function handleDialogFlowAction(
             //obtener parametro del contexto y agendar cita
             let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
             console.log(JSON.stringify(fechaHoraAgendar));
-            const timeZoneOffset = '-05:00';
-            const horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + timeZoneOffset));
+            let timeZoneOffset = '-05:00';
+            let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + timeZoneOffset));
 
             getHoraDisponible(horaAgendar).then((fecha) => {
                 const dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
