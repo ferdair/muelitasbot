@@ -74,41 +74,47 @@ function getHoraDisponible(dia) {
     console.log('Consultar hasta: ', maxDia);
 
 
-    let events;
-
-    calendar.events.list({
-        auth: serviceAccountAuth, // List events for time period
-        calendarId: calendarId,
-        timeMin: minDia.toISOString(),
-        timeMax: maxDia.toISOString(),
-        showDeleted: false,
-
-    }, (err, res) => {
-        hora = res;
+    return new Promise((resolve, reject) => {
         let fechaHoraUltimaCita;
+        calendar.events.list({
+            auth: serviceAccountAuth, // List events for time period
+            calendarId: calendarId,
+            timeMin: minDia.toISOString(),
+            timeMax: maxDia.toISOString(),
+            showDeleted: false,
 
-        if (err) return console.log('The API returned an error: ' + err);
-        //const events = res.data.items;
-        events = res.data.items;
-        if (events.length) {
-            console.log('Upcoming 10 events:');
-            events.map((event, i) => {
-                const start = event.start.dateTime || event.start.date;
-                console.log(`${start} - ${event.summary}`);
-            });
+        }, (err, res) => {
+            hora = res;
 
-            //retornar fecha y hora para cita 
-            console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
 
-            return fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
-            //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
+            if (err) {
+                reject(console.log('The API returned an error: ' + err));
+                //return console.log('The API returned an error: ' + err);
+            }
+            //const events = res.data.items;
+            events = res.data.items;
+            if (events.length) {
+                console.log('Upcoming 10 events:');
+                events.map((event, i) => {
+                    const start = event.start.dateTime || event.start.date;
+                    console.log(`${start} - ${event.summary}`);
+                });
 
-        } else {
-            console.log('No upcoming events found.');
-            //sino la hora para la primera cita del día
-            return fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
-        }
-    });
+                //retornar fecha y hora para cita 
+                console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
+
+                fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
+                resolve(fechaHoraUltimaCita);
+                //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
+
+            } else {
+                console.log('No upcoming events found.');
+                //sino la hora para la primera cita del día
+                fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
+            }
+        });
+    })
+
 
     return events;
     /*.then(function(response) {
