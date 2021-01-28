@@ -262,7 +262,12 @@ async function handleDialogFlowAction(
         case "SiReservar.action":
             console.log('Contextos: ', contexts);
             console.log('Parametros: ', parameters.fields);
-            sendTextMessage(sender, `Ok, tu cita esta reservada. ${parameters.fields.date} esta agendado!.`);
+
+            //obtener parametro del contexto y agendar cita
+            let fechaHora = contexts[0].parameters.fields;
+            console.log(JSON.stringify(fechaHora));
+
+            sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaHora} esta agendado!.`);
 
             break;
 
