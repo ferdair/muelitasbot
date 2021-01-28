@@ -63,11 +63,17 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 
 
 function getHoraDisponible(dia) {
-    var fechaHoraUltimaCita;
+
+    let maxDia = new Date(new Date(dia).setHours(dia.getHours() + 22)); //hasta las 23 hrs
+    let fechaHoraUltimaCita;
+    console.log('Consultar hasta: ', maxDia);
+
     calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
         timeMin: dia.toISOString(),
+        timeMax: maxDia.toISOString(),
+        showDeleted: false,
 
     }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
