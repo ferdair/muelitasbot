@@ -100,7 +100,8 @@ function getHoraDisponible(dia) {
 
                 //retornar fecha y hora para cita 
                 fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
-                fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1);
+                let aux = new Date(new Date(fechaHoraUltimaCita).setMinutes(minDia.getMinutes() + 1));
+                fechaHoraUltimaCita = aux;
                 console.log(`fECHA DEFINITIVA PARA AGENDAR ${ fechaHoraUltimaCita}`);
                 //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
 
