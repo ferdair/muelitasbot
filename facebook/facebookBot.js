@@ -266,7 +266,7 @@ async function handleDialogFlowAction(
             //obtener parametro del contexto y agendar cita
             let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
             console.log(JSON.stringify(fechaHoraAgendar));
-            let timeZoneOffset = '-05:00';
+            //let timeZoneOffset = '-05:00';
             let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + timeZoneOffset));
 
             getHoraDisponible(horaAgendar).then((fecha) => {
