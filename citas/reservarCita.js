@@ -74,7 +74,7 @@ function getHoraDisponible(dia) {
     console.log('Consultar hasta: ', maxDia);
 
 
-    const events;
+    let events;
 
     calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
