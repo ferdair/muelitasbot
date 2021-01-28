@@ -1,3 +1,4 @@
+const axios = require('axios');
 'use strict';
 
 // Import the Dialogflow module from Google client libraries.
@@ -62,15 +63,19 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 }
 
 
+
+
+
 function getHoraDisponible(dia) {
 
     let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
     console.log('Consultar desde: ', minDia);
-    let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hrs
-    let fechaHoraUltimaCita;
+    let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
     console.log('Consultar hasta: ', maxDia);
 
-    calendar.events.list({
+
+
+    let hora = calendar.events.list({
         auth: serviceAccountAuth, // List events for time period
         calendarId: calendarId,
         timeMin: minDia.toISOString(),
@@ -78,6 +83,8 @@ function getHoraDisponible(dia) {
         showDeleted: false,
 
     }, (err, res) => {
+        let fechaHoraUltimaCita;
+
         if (err) return console.log('The API returned an error: ' + err);
         const events = res.data.items;
         if (events.length) {
@@ -99,7 +106,7 @@ function getHoraDisponible(dia) {
         }
     });
 
-    return fechaHoraUltimaCita;
+    return hora;
     /*.then(function(response) {
             // Handle the results here (response.result has the parsed body).
 
