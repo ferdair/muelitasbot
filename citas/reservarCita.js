@@ -64,9 +64,9 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
 
 function getHoraDisponible(dia) {
 
-    let minDia = new Date(new Date(dia).setHours(0)); //hora de la ultima cita + 30 min;
+    let minDia = new Date(dia.setHours(0)); //hora de la ultima cita + 30 min;
     console.log('Consultar desde: ', minDia);
-    let maxDia = new Date(new Date(dia).setHours(22));; //hasta las 23 hrs
+    let maxDia = new Date(dia.setHours(22));; //hasta las 23 hrs
     let fechaHoraUltimaCita;
     console.log('Consultar hasta: ', maxDia);
 
