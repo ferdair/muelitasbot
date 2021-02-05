@@ -235,7 +235,7 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
                 //formatear fecha
-                let fechaDisp = moment(fecha).format('dddd Do, h:mm a');
+                let fechaDisp = moment(fecha).format('Dddd D, h:mm a');
 
                 console.log(`Fecha para cita desde bot: ${fecha}`);
                 console.log(`Fecha casteada: ${fechaDisp}`);
@@ -285,11 +285,15 @@ async function handleDialogFlowAction(
                 let appointmentTimeString = fecha.toLocaleString(
                     'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: 'America/Guayaquil' }
                 );
+
+                let fechaConfirm = moment(fecha).format('Dddd D, h:mm a');
+
                 // Check the availability of the time, and make an appointment if there is time on the calendar
                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
-                    sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
+
+                    sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaConfirm} esta agendado!.`);
                 }).catch(() => {
-                    sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
+                    sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
                 });
 
             })

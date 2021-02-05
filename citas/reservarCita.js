@@ -108,7 +108,7 @@ function getHoraDisponible(dia) {
             } else {
                 console.log('No upcoming events found.');
                 //sino la hora para la primera cita del día
-                fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 9));
+                fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 14));
             }
             console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
             resolve(fechaHoraUltimaCita);
