@@ -235,7 +235,7 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
                 //formatear fecha
-                let fechaDisp = moment(fecha).format('Dddd D, h:mm a');
+                let fechaDisp = moment(fecha).format('LLLL');
 
                 console.log(`Fecha para cita desde bot: ${fecha}`);
                 console.log(`Fecha casteada: ${fechaDisp}`);
@@ -286,7 +286,7 @@ async function handleDialogFlowAction(
                     'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: 'America/Guayaquil' }
                 );
 
-                let fechaConfirm = moment(fecha).format('Dddd D, h:mm a');
+                let fechaConfirm = moment(fecha).format('LLLL');
 
                 // Check the availability of the time, and make an appointment if there is time on the calendar
                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
