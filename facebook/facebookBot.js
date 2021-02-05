@@ -265,7 +265,7 @@ async function handleDialogFlowAction(
                 // Check the availability of the time, and make an appointment if there is time on the calendar
                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`, sender).then(() => {
 
-                    sendTextMessage(sender, `Ok, tu cita esta reservada. Para el día ${fechaConfirm} esta agendada!.`);
+                    sendTextMessage(sender, `Ok, tu cita esta reservada para el día ${fechaConfirm}.`);
                 }).catch(() => {
                     sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
                 });
