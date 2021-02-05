@@ -239,32 +239,9 @@ async function handleDialogFlowAction(
 
                 console.log(`Fecha para cita desde bot: ${fecha}`);
                 console.log(`Fecha casteada: ${fechaDisp}`);
-                sendTextMessage(sender, `Te podemos agendar una cita el dia ${fechaDisp}`);
-                sendTextMessage(sender, `Si o no?!`);
+                sendTextMessage(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `);
 
             })
-
-            /*let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
-            const timeZone = 'America/Guayaquil';
-            const timeZoneOffset = '-05:00';
-
-            console.log('========= EVENTOS ==========')
-            getHoraDisponible();
-            //2021-01-25T12:00:00-05:00
-            const dateTimeStart = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + timeZoneOffset));
-
-            console.log('dateTimeStart:', dateTimeStart);
-            const dateTimeEnd = new Date(new Date(dateTimeStart).setHours(dateTimeStart.getHours() + 1));
-            const appointmentTimeString = dateTimeStart.toLocaleString(
-                'es-EC', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: timeZone }
-            );
-            // Check the availability of the time, and make an appointment if there is time on the calendar
-            createCalendarEvent(dateTimeStart, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
-                sendTextMessage(sender, `Ok, tu cita esta reservada. ${appointmentTimeString} esta agendado!.`);
-            }).catch(() => {
-                sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${appointmentTimeString}.`);
-            });*/
-
 
 
             break;
@@ -282,23 +259,18 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(horaAgendar).then((fecha) => {
                 let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
-                let appointmentTimeString = fecha.toLocaleString(
-                    'es-MX', { month: 'long', day: 'numeric', hour: 'numeric', timeZone: 'America/Guayaquil' }
-                );
 
                 let fechaConfirm = moment(fecha).format('LLLL');
 
                 // Check the availability of the time, and make an appointment if there is time on the calendar
-                createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`).then(() => {
+                createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`, sender).then(() => {
 
-                    sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaConfirm} esta agendado!.`);
+                    sendTextMessage(sender, `Ok, tu cita esta reservada. Para el día ${fechaConfirm} esta agendada!.`);
                 }).catch(() => {
                     sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
                 });
 
             })
-
-            //sendTextMessage(sender, `Ok, tu cita esta reservada. ${fechaHora} esta agendado!.`);
 
             break;
 

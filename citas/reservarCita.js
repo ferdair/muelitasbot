@@ -32,7 +32,7 @@ const calendar = google.calendar('v3');
 process.env.DEBUG = 'dialogflow:*'; // enables lib debugging statements
 
 //Creates calendar event in Google Calendar
-function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
+function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUser) {
     return new Promise((resolve, reject) => {
         calendar.events.list({
             auth: serviceAccountAuth, // List events for time period
@@ -50,7 +50,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type) {
                     calendarId: calendarId,
                     resource: {
                         summary: appointment_type + ' ',
-                        description: appointment_type,
+                        description: idUser + '//',
                         start: { dateTime: dateTimeStart },
                         end: { dateTime: dateTimeEnd }
                     }
