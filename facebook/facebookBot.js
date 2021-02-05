@@ -5,6 +5,9 @@ const request = require("request");
 const uuid = require("uuid");
 const axios = require("axios");
 const { google } = require('googleapis');
+const moment = require('moment');
+moment.locale('es');
+
 
 //archivos
 const config = require("../server/config/credentials");
@@ -231,9 +234,13 @@ async function handleDialogFlowAction(
 
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
+                //formatear fecha
+                let fechaDisp = moment(fecha).format('dddd Do, h:mm a');
+
                 console.log(`Fecha para cita desde bot: ${fecha}`);
-                sendTextMessage(sender, `Te podemos agendar una cita el dia ${fecha}`);
-                sendTextMessage(sender, `Si o no? Confirma!`);
+                console.log(`Fecha casteada: ${fechaDisp}`);
+                sendTextMessage(sender, `Te podemos agendar una cita el dia ${fechaDisp}`);
+                sendTextMessage(sender, `Si o no?!`);
 
             })
 
