@@ -239,8 +239,18 @@ async function handleDialogFlowAction(
 
                 console.log(`Fecha para cita desde bot: ${fecha}`);
                 console.log(`Fecha casteada: ${fechaDisp}`);
-                sendTextMessage(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `);
-
+                //sendTextMessage(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `);
+                sendQuickReply(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `, [{
+                        "content_type": "text",
+                        "title": "Si",
+                        "payload": "Si"
+                    },
+                    {
+                        "content_type": "text",
+                        "title": "No",
+                        "payload": "No"
+                    }
+                ]);
             })
 
 
@@ -276,13 +286,27 @@ async function handleDialogFlowAction(
             break;
 
         case "Motivo.action":
-            let motivo = contexts[0].parameters.fields.motivo;
-            let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
+            let motivo = contexts[0].parameters.fields.motivo; //motivo de la cita
+            let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue; //fecha en la que aceptó la cita
 
             console.log('Fecha para agendar', JSON.stringify(fechaHoraAgendar));
             console.log('Motivo: ', motivo);
 
-            sendTextMessage(sender, `Entonces tu motivo es ${JSON.stringify(motivo)}`);
+            let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + '-05:00'));
+
+            //obtengo la hora disponible
+            getHoraDisponible(horaAgendar).then((fecha) => {
+                let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1)); //calculo duracion 
+                let fechaConfirm = moment(fecha).format('LLLL'); //formateo de la fecha para enviarla en el chat
+                // creo la cita en el calendar
+                createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}. Motivo: ${motivo.stringValue}`, sender).then(() => {
+                    sendTextMessage(sender, `Ok, tu cita esta reservada para el día ${fechaConfirm}.`);
+                }).catch(() => {
+                    sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
+                });
+
+            });
+
             break;
 
 
