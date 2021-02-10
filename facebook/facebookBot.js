@@ -251,28 +251,40 @@ async function handleDialogFlowAction(
             console.log('Parametros: ', parameters.fields);
             let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
 
+            sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
             //obtener parametro del contexto y agendar cita
-            let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
-            console.log(JSON.stringify(fechaHoraAgendar));
-            //
-            let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + '-05:00'));
+            /* let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
+             console.log(JSON.stringify(fechaHoraAgendar));
+             //
+             let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + '-05:00'));
 
-            getHoraDisponible(horaAgendar).then((fecha) => {
-                let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
+             getHoraDisponible(horaAgendar).then((fecha) => {
+                 let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
 
-                let fechaConfirm = moment(fecha).format('LLLL');
+                 let fechaConfirm = moment(fecha).format('LLLL');
 
-                // Check the availability of the time, and make an appointment if there is time on the calendar
-                createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`, sender).then(() => {
+                 // Check the availability of the time, and make an appointment if there is time on the calendar
+                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`, sender).then(() => {
 
-                    sendTextMessage(sender, `Ok, tu cita esta reservada para el día ${fechaConfirm}.`);
-                }).catch(() => {
-                    sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
-                });
+                     sendTextMessage(sender, `Ok, tu cita esta reservada para el día ${fechaConfirm}.`);
+                 }).catch(() => {
+                     sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
+                 });
 
-            })
+             })*/
 
             break;
+
+        case "Motivo.action":
+            let motivo = contexts[0].parameters.fields.motivo;
+            let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
+
+            console.log('Fecha para agendar', JSON.stringify(fechaHoraAgendar));
+            console.log('Motivo: ', motivo);
+
+            sendTextMessage(sender, `Entonces tu motivo es ${JSON.stringify(motivo)}`);
+            break;
+
 
         default:
             //unhandled action, just send back the text
