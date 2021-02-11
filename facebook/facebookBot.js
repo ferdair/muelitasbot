@@ -216,8 +216,8 @@ async function handleDialogFlowAction(
             let replies = [];
             replies = dias.DiasDisponibles();
             //console.log(replies);
-            //sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
-            sendTextMessage(sender, '¿Qué día deseas reservar la cita?');
+            sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
+            //sendTextMessage(sender, '¿Qué día deseas reservar la cita?');
             break;
 
         case "Dia.action":
@@ -259,32 +259,10 @@ async function handleDialogFlowAction(
             break;
 
         case "SiReservar.action":
+
             console.log('Contextos: ', contexts);
             console.log('Parametros: ', parameters.fields);
-
-
             sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
-            //obtener parametro del contexto y agendar cita
-            /* let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue;
-             console.log(JSON.stringify(fechaHoraAgendar));
-             //
-             let horaAgendar = new Date(Date.parse(fechaHoraAgendar.split('T')[0] + 'T' + fechaHoraAgendar.split('T')[1].split('-')[0] + '-05:00'));
-
-             getHoraDisponible(horaAgendar).then((fecha) => {
-                 let dateTimeEnd = new Date(new Date(fecha).setHours(fecha.getHours() + 1));
-
-                 let fechaConfirm = moment(fecha).format('LLLL');
-
-                 // Check the availability of the time, and make an appointment if there is time on the calendar
-                 createCalendarEvent(fecha, dateTimeEnd, `Cita con ${user.first_name} ${user.last_name}`, sender).then(() => {
-
-                     sendTextMessage(sender, `Ok, tu cita esta reservada para el día ${fechaConfirm}.`);
-                 }).catch(() => {
-                     sendTextMessage(sender, `Lo siento no tenemos disponible en ese horario ${fechaConfirm}.`);
-                 });
-
-             })*/
-
             break;
 
         case "Motivo.action":
