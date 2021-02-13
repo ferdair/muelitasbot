@@ -68,13 +68,29 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
 
 function getHoraDisponible(dia) {
 
-    let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
+
+    let actual = new Date(); //Fechay y hora actual
+    //let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
+    let minDia = new Date(dia); //fecha que viene de dialogflow
+    //let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
+    let maxDia = new Date(dia);
+    maxDia.setHours(23); // máximo hasta las 23 horas
+
     console.log('Consultar desde: ', minDia);
-    let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
     console.log('Consultar hasta: ', maxDia);
 
+    //si el dia elegido es hoy se consulta los eventons minimo desde la hora en la que es
+    if ((actual.getDay() === dia.getDay()) && (actual.getMonth() === dia.getMonth())) {
+        minDia.setHours(actual.getHours());
+        minDia.setMinutes(actual.getMinutes());
+    } else {
+        minDia.setHours(0);
+        minDia.setMinutes(0);
+    }
 
     return new Promise((resolve, reject) => {
+
+        let fechaHoraAgendar;
 
         calendar.events.list({
             auth: serviceAccountAuth, // List events for time period
@@ -85,12 +101,13 @@ function getHoraDisponible(dia) {
 
         }, (err, res) => {
             let fechaHoraUltimaCita;
+
             if (err) {
                 reject(console.log('The API returned an error: ' + err));
                 //return console.log('The API returned an error: ' + err);
             }
             //const events = res.data.items;
-            events = res.data.items;
+            let events = res.data.items;
             if (events.length) {
                 console.log('Upcoming 10 events:');
                 events.map((event, i) => {
@@ -98,20 +115,38 @@ function getHoraDisponible(dia) {
                     console.log(`${start} - ${event.summary}`);
                 });
 
-                //retornar fecha y hora para cita 
-                fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date;
-                let aux = new Date(new Date(fechaHoraUltimaCita).setMinutes(minDia.getMinutes() + 1));
-                fechaHoraUltimaCita = aux;
-                console.log(`fECHA DEFINITIVA PARA AGENDAR ${ fechaHoraUltimaCita}`);
+
+                fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date; // fecha hora ultima cita
+                console.log(`Fecha hora ultima cita: +${ fechaHoraUltimaCita}`);
+                //si ya paso la hora de la última cita, la hora para agendar es 25 min mas a la actual
+                if (actual.getHours() > fechaHoraUltimaCita.getHours()) {
+                    fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 25));
+                    console.log(`Hora actual +25 min ${   fechaHoraAgendar}`);
+                } else { //si aun no pasa la hora de la ultima cita
+                    let difHora = fechaHoraUltimaCita().getHours() - actual.getHours();
+                    if (difHora >= 1) { //si falta una hora para que finalice la ultima cita se agenda despues de un minuto 
+                        fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
+                        console.log(`Mas un minuto si falta 1 hora o mas: ${  fechaHoraAgendar}`);
+                    } else { //si falta menos de una hora para que finalice la ultima cita
+                        fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 15));
+                        console.log(`Mas 15 minuto si falta menos 1: ${  fechaHoraAgendar}`);
+                    }
+
+                }
+
+                //let aux = new Date(new Date(fechaHoraUltimaCita).setMinutes(minDia.getMinutes() + 1));
+                //fechaHoraUltimaCita = aux;
+                console.log(`fECHA DEFINITIVA PARA AGENDAR ${  fechaHoraAgendar}`);
                 //let fechaParaCita = new Date(new Date(fechaHoraUltimaCita).setMinutes(dateTimeStart.getMinutes() + 30));//hora de la ultima cita + 30 min
 
             } else {
                 console.log('No upcoming events found.');
                 //sino la hora para la primera cita del día
-                fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 14));
+                //fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 14));
+                fechaHoraAgendar = new Date(new Date(minDia).setHours(9));
             }
             console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
-            resolve(fechaHoraUltimaCita);
+            resolve(fechaHoraAgendar);
         });
 
     })
