@@ -76,8 +76,7 @@ function getHoraDisponible(dia) {
     let maxDia = new Date(dia);
     maxDia.setHours(23); // máximo hasta las 23 horas
 
-    console.log('Consultar desde: ', minDia);
-    console.log('Consultar hasta: ', maxDia);
+
 
     //si el dia elegido es hoy se consulta los eventons minimo desde la hora en la que es
     if ((actual.getDay() === dia.getDay()) && (actual.getMonth() === dia.getMonth())) {
@@ -87,6 +86,8 @@ function getHoraDisponible(dia) {
         minDia.setHours(0);
         minDia.setMinutes(0);
     }
+    console.log('Consultar desde: ', minDia);
+    console.log('Consultar hasta: ', maxDia);
 
     return new Promise((resolve, reject) => {
 
@@ -116,7 +117,7 @@ function getHoraDisponible(dia) {
                 });
 
 
-                fechaHoraUltimaCita = events[events.length - 1].end.dateTime || events[events.length - 1].end.date; // fecha hora ultima cita
+                fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
                 console.log(`Fecha hora ultima cita: +${ fechaHoraUltimaCita}`);
                 //si ya paso la hora de la última cita, la hora para agendar es 25 min mas a la actual
                 if (actual.getHours() > fechaHoraUltimaCita.getHours()) {
