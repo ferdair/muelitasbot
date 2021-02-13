@@ -75,7 +75,7 @@ function getHoraDisponible(dia) {
     //let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
     let maxDia = new Date(new Date(dia));
     maxDia.setHours(23); // máximo hasta las 23 horas
-
+    maxDia.setMinutes(0);
 
 
     //si el dia elegido es hoy se consulta los eventons minimo desde la hora en la que es
@@ -88,6 +88,7 @@ function getHoraDisponible(dia) {
         minDia.setHours(0);
         minDia.setMinutes(0);
     }
+    console.log('Actual: ', actual);
     console.log('Consultar desde: ', minDia);
     console.log('Consultar hasta: ', maxDia);
 
