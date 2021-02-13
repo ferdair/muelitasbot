@@ -88,7 +88,7 @@ function getHoraDisponible(dia) {
         minDia.setHours(0);
         minDia.setMinutes(0);
     }
-    console.log('Actual: ', actua.toISOString());
+    console.log('Actual: ', actual.toISOString());
     console.log('Consultar desde: ', minDia.toISOString());
     console.log('Consultar hasta: ', maxDia.toISOString());
 
