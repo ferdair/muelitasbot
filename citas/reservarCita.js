@@ -124,7 +124,7 @@ function getHoraDisponible(dia) {
                     fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 25));
                     console.log(`Hora actual +25 min ${   fechaHoraAgendar}`);
                 } else { //si aun no pasa la hora de la ultima cita
-                    let difHora = fechaHoraUltimaCita().getHours() - actual.getHours();
+                    let difHora = fechaHoraUltimaCita.getHours() - actual.getHours();
                     if (difHora >= 1) { //si falta una hora para que finalice la ultima cita se agenda despues de un minuto 
                         fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
                         console.log(`Mas un minuto si falta 1 hora o mas: ${  fechaHoraAgendar}`);
