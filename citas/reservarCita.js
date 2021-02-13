@@ -71,9 +71,9 @@ function getHoraDisponible(dia) {
 
     let actual = new Date(); //Fechay y hora actual
     //let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
-    let minDia = new Date(dia); //fecha que viene de dialogflow
+    let minDia = new Date(new Date(dia)); //fecha que viene de dialogflow
     //let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
-    let maxDia = new Date(dia);
+    let maxDia = new Date(new Date(dia));
     maxDia.setHours(23); // máximo hasta las 23 horas
 
 
@@ -82,6 +82,8 @@ function getHoraDisponible(dia) {
     if ((actual.getDay() === dia.getDay()) && (actual.getMonth() === dia.getMonth())) {
         minDia.setHours(actual.getHours());
         minDia.setMinutes(actual.getMinutes());
+
+        console.log("ES HOY !!");
     } else {
         minDia.setHours(0);
         minDia.setMinutes(0);
@@ -109,6 +111,7 @@ function getHoraDisponible(dia) {
             }
             //const events = res.data.items;
             let events = res.data.items;
+            //si hay eventos
             if (events.length) {
                 console.log('Upcoming 10 events:');
                 events.map((event, i) => {
