@@ -1,4 +1,8 @@
 const axios = require('axios');
+const moment = require('moment-timezone');
+moment.tz('America/Guayaquil').format();
+
+
 'use strict';
 
 // Import the Dialogflow module from Google client libraries.
@@ -69,7 +73,8 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
 function getHoraDisponible(dia) {
 
 
-    let actual = new Date(); //Fechay y hora actual
+    let actual = moment().toDate();
+    //= new Date(); //Fechay y hora actual
     //let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
     let minDia = new Date(new Date(dia)); //fecha que viene de dialogflow
     //let maxDia = new Date(new Date(minDia).setHours(minDia.getHours() + 23)); //hasta las 23 hr
