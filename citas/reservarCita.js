@@ -75,6 +75,7 @@ function getHoraDisponible(dia) {
     console.log(`Moment type: ${moment}`);
     let actual = moment().toDate();
     console.log(`Moment to date: ${actual}`);
+    let esHoy = false;
     //= new Date(); //Fechay y hora actual
     //let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
     let minDia = new Date(new Date(dia)); //fecha que viene de dialogflow
@@ -89,6 +90,7 @@ function getHoraDisponible(dia) {
         console.log("ES HOY !!");
         minDia.setHours(actual.getHours());
         minDia.setMinutes(actual.getMinutes());
+        esHoy = true;
 
     } else {
         minDia.setHours(0);
@@ -153,7 +155,16 @@ function getHoraDisponible(dia) {
                 console.log('No upcoming events found.');
                 //sino la hora para la primera cita del día
                 //fechaHoraUltimaCita = new Date(new Date(minDia).setHours(minDia.getHours() + 14));
-                fechaHoraAgendar = new Date(new Date(minDia).setHours(9));
+                if (esHoy) {
+                    console.log(`Es hoy: ${esHoy}`);
+                    fechaHoraAgendar = new Date(new Date(minDia).setHours(actual.getHours()));
+                    fechaHoraAgendar.setMinutes(actual.getMinutes() + 20);
+
+                } else {
+                    fechaHoraAgendar = new Date(new Date(minDia).setHours(9));
+                }
+
+
             }
             console.log('Fecha ultima cita: ', fechaHoraUltimaCita);
             resolve(fechaHoraAgendar);
