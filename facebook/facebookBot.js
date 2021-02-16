@@ -5,7 +5,7 @@ const request = require("request");
 const uuid = require("uuid");
 const axios = require("axios");
 const { google } = require('googleapis');
-const moment = require('moment');
+const moment = require('moment-timezone');
 moment.tz('America/Guayaquil').format();
 moment.locale('es');
 
