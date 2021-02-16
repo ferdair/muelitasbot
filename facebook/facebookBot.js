@@ -176,6 +176,9 @@ async function handleQuickReply(senderId, quickReply, messageId) {
 
 
 //=================== TODAS LAS ACCIONES QUE SE NECCESITEN VAN AQUI================================
+
+
+//===============================================================================================
 async function handleDialogFlowAction(
     sender,
     action,
@@ -217,7 +220,7 @@ async function handleDialogFlowAction(
             let replies = [];
             replies = dias.DiasDisponibles();
             //console.log(replies);
-            sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies);
+            sendQuickReply(sender, '¿Qué día desea reservar la cita?', replies).catch(err => { console.error('No se pudo enviar quick replies con los dias: ', err); });
             //sendTextMessage(sender, '¿Qué día deseas reservar la cita?');
             break;
 
