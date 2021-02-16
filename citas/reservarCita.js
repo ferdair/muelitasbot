@@ -86,17 +86,17 @@ function getHoraDisponible(dia) {
 
     //si el dia elegido es hoy se consulta los eventons minimo desde la hora en la que es
     if ((actual.getDay() === dia.getDay()) && (actual.getMonth() === dia.getMonth())) {
+        console.log("ES HOY !!");
         minDia.setHours(actual.getHours());
         minDia.setMinutes(actual.getMinutes());
 
-        console.log("ES HOY !!");
     } else {
         minDia.setHours(0);
         minDia.setMinutes(0);
     }
-    console.log('Actual: ', actual.toISOString());
-    console.log('Consultar desde: ', minDia.toISOString());
-    console.log('Consultar hasta: ', maxDia.toISOString());
+    console.log(`Actual: ${actual.toISOString()}`);
+    console.log(`Consultar desde: ${minDia}`);
+    console.log(`Consultar hasta: ${maxDia}`);
 
     return new Promise((resolve, reject) => {
 
@@ -125,7 +125,6 @@ function getHoraDisponible(dia) {
                     const start = event.start.dateTime || event.start.date;
                     console.log(`${start} - ${event.summary}`);
                 });
-
 
                 fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
                 console.log(`Fecha hora ultima cita: +${ fechaHoraUltimaCita}`);
