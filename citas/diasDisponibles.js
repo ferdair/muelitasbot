@@ -1,8 +1,9 @@
-var moment = require('moment');
+const moment = require('moment');
+moment.tz('America/Guayaquil').format();
 
 function DiasDisponibles() {
     let today = moment();
-
+    console.log(`Actual desde diasDisponibles.js: ${today}`);
     //let today = moment("20210130", "YYYYMMDD"); //para probar XD
     today.locale('es');
 

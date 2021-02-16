@@ -6,6 +6,7 @@ const uuid = require("uuid");
 const axios = require("axios");
 const { google } = require('googleapis');
 const moment = require('moment');
+moment.tz('America/Guayaquil').format();
 moment.locale('es');
 
 
@@ -212,7 +213,7 @@ async function handleDialogFlowAction(
             }, ]);
             break;
 
-        case "Cita.action": //enviar todo el payload
+        case "Cita.action": //envia quick reply con los días disponibles
             let replies = [];
             replies = dias.DiasDisponibles();
             //console.log(replies);
@@ -220,7 +221,7 @@ async function handleDialogFlowAction(
             //sendTextMessage(sender, '¿Qué día deseas reservar la cita?');
             break;
 
-        case "Dia.action":
+        case "Dia.action": //envia mensaje con la hora disponible segun el dia seleccionado (confirmacion con quick reply) 
             let dia = parameters.fields.date;
             let strFecha = dia.stringValue;
             console.log('Dia desde dialog flow', dia);
@@ -255,14 +256,14 @@ async function handleDialogFlowAction(
 
             break;
 
-        case "SiReservar.action":
+        case "SiReservar.action": //bot pregunta por motivo
 
             console.log('Contextos: ', contexts);
             console.log('Parametros: ', parameters.fields);
             sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
             break;
 
-        case "Motivo.action":
+        case "Motivo.action": //cuando el paciente envia el motivo, se agenda la cita
             let motivo = contexts[0].parameters.fields.motivo; //motivo de la cita
             let fechaHoraAgendar = contexts[0].parameters.fields.date.stringValue; //fecha en la que aceptó la cita
             let user = await getUserData(sender).catch(err => { console.error('Error: ', err); });
@@ -551,8 +552,7 @@ async function sendGenericMessage(recipientId, elements) {
  * Send a message with Quick Reply buttons.
  *
  */
-async function
-sendQuickReply(recipientId, text, replies, metadata) {
+async function sendQuickReply(recipientId, text, replies, metadata) {
     var messageData = {
         recipient: {
             id: recipientId,

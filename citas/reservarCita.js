@@ -72,8 +72,9 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
 
 function getHoraDisponible(dia) {
 
-
+    console.log(`Moment type: ${moment}`);
     let actual = moment().toDate();
+    console.log(`Moment to date: ${actual}`);
     //= new Date(); //Fechay y hora actual
     //let minDia = new Date(new Date(dia).setHours(dia.getHours() - 17)); //desde las 00 horas
     let minDia = new Date(new Date(dia)); //fecha que viene de dialogflow
