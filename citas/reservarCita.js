@@ -117,6 +117,9 @@ function getHoraDisponible(dia) {
                 let events = res.data.items;
 
                 if (err) {
+                    console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                    resolve(fechaHoraAgendar);
+
                     reject(console.log('The API returned an error: ' + err));
                 }
                 //si hay eventos
@@ -130,34 +133,47 @@ function getHoraDisponible(dia) {
                         console.log("Aun no termina la última cita");
 
                         //tiempo en minutos que falta para que finalice la última cita
-                        let minRestante = moment(actual).diff(moment(fechaHoraUltimaCita), 'minutes');
+                        let minRestante = moment(fechaHoraUltimaCita).diff(moment(actual), 'minutes');
                         console.log(`La ultima cita de hoy termina en: ${fechaHoraUltimaCita}`);
                         console.log(`Faltan ${minRestante} para que finalice la cita`);
                         //si aun falta una hora o más para que se termine la última cita
                         if (minRestante >= 60) {
                             console.log(`Falta mas de una hora`);
                             fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                            console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                            resolve(fechaHoraAgendar);
+
                         } else {
                             if ((minRestante >= 20) && (minRestante <= 59)) { //aun falta ntre 20 y 59 mins para que se termine
                                 console.log(`Falta entre 20 y 59 min`);
                                 fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                                console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                                resolve(fechaHoraAgendar);
+
                             } else {
                                 console.log(`falta menos de 20 min`);
                                 fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
+                                console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                                resolve(fechaHoraAgendar);
+
                             }
                         }
 
                     } else { //ya termino la última cita
                         console.log('Ya termino la última cita');
                         fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
+                        console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                        resolve(fechaHoraAgendar);
+
                     }
                 } else { //no hay eventos y es hoy
                     console.log(`No hay eventos hoy`);
                     fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
+                    console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
+                    resolve(fechaHoraAgendar);
+
                 }
             });
-            console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
-            resolve(fechaHoraAgendar);
 
         });
     } else { //otro día en el futuro
