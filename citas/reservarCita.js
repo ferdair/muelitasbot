@@ -146,7 +146,7 @@ function getHoraDisponible(dia) {
                         } else {
                             if ((minRestante >= 20) && (minRestante <= 59)) { //aun falta ntre 20 y 59 mins para que se termine
                                 console.log(`Falta entre 20 y 59 min`);
-                                fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                                fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
                                 console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
                                 resolve(fechaHoraAgendar);
 
@@ -195,15 +195,19 @@ function getHoraDisponible(dia) {
                 if (events.length) {
                     console.log(`Hay eventos pero no es hoy`);
                     let fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
-                    fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1))
+                    fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                    console.log(`Fecha a agendar si no es hoy ${fechaHoraAgendar}`);
+                    resolve(fechaHoraAgendar);
+
                 } else { //no hay eventos
                     console.log(`No hay eventos pero no es hoy`);
-                    fechaHoraAgendar = new Date(minDia)
+                    fechaHoraAgendar = new Date(minDia.setHours(9));
+                    console.log(`Fecha a agendar sino es hoy ${fechaHoraAgendar}`);
+                    resolve(fechaHoraAgendar);
+
                 }
 
             });
-            console.log(`Fecha a agendar si no es hoy ${fechaHoraAgendar}`);
-            resolve(fechaHoraAgendar);
         })
     }
 
