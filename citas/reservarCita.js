@@ -67,9 +67,6 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
 }
 
 
-
-
-
 function getHoraDisponible(dia) {
 
     console.log(`Moment type: ${moment}`);
