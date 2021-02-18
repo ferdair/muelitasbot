@@ -195,7 +195,7 @@ function getHoraDisponible(dia) {
                 if (events.length) {
                     console.log(`Hay eventos pero no es hoy`);
                     let fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
-                    fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                    fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
                     console.log(`Fecha a agendar si no es hoy ${fechaHoraAgendar}`);
                     resolve(fechaHoraAgendar);
 
@@ -206,7 +206,6 @@ function getHoraDisponible(dia) {
                     resolve(fechaHoraAgendar);
 
                 }
-
             });
         })
     }
