@@ -139,7 +139,7 @@ function getHoraDisponible(dia) {
                         //si aun falta una hora o más para que se termine la última cita
                         if (minRestante >= 60) {
                             console.log(`Falta mas de una hora`);
-                            fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(actual.getMinutes() + 1));
+                            fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
                             console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
                             resolve(fechaHoraAgendar);
 
