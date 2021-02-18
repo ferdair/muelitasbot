@@ -95,6 +95,7 @@ function getHoraDisponible(dia) {
     } else {
         minDia.setHours(0);
         minDia.setMinutes(0);
+        esHoy = false;
     }
 
     console.log(`Consultar desde: ${minDia}`);
@@ -120,7 +121,7 @@ function getHoraDisponible(dia) {
                 }
                 //si hay eventos
                 if (events.length) {
-
+                    console.log(`Èventos hoy: ${events}`);
                     //obtengo la hora final de la última cita 
 
                     let fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
@@ -129,7 +130,8 @@ function getHoraDisponible(dia) {
                         console.log("Aun no termina la última cita");
 
                         //tiempo en minutos que falta para que finalice la última cita
-                        let minRestante = moment(actual).diff(moment(fechaHoraUltimaCita, 'minutes'));
+                        let minRestante = moment(actual).diff(moment(fechaHoraUltimaCita), 'minutes');
+                        console.log(`La ultima cita de hoy termina en: ${fechaHoraUltimaCita}`);
                         console.log(`Faltan ${minRestante} para que finalice la cita`);
                         //si aun falta una hora o más para que se termine la última cita
                         if (minRestante >= 60) {
@@ -150,13 +152,14 @@ function getHoraDisponible(dia) {
                         fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
                     }
                 } else { //no hay eventos y es hoy
+                    console.log(`No hay eventos hoy`);
                     fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
                 }
             });
             console.log(`Fecha a agendar si es hoy ${fechaHoraAgendar}`);
             resolve(fechaHoraAgendar);
 
-        })
+        });
     } else { //otro día en el futuro
         return new Promise((resolve, reject) => {
             let fechaHoraAgendar;
