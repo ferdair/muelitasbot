@@ -234,7 +234,7 @@ async function handleDialogFlowAction(
             let diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + '-05:00'));
             console.log('Dia a consultar: ', diaAConsultar);
 
-            getHoraDisponible(diaAConsultar).then((fecha) => {
+            getHoraDisponible(diaAConsultar, sender).then((fecha) => {
 
                 if (typeof fecha === 'string') {
                     console.log(`Valor decuelto en la promesa: ${fecha}`);
