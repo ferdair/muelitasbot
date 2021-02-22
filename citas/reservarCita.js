@@ -128,7 +128,12 @@ function getHoraDisponible(dia, idUser) {
                             console.log('Ya tiene una cita agendada');
                         }
                     });
-                    console.log(`Èventos hoy: ${events}`);
+                    console.log(`Èventos hoy: `);
+                    events.map((event, i) => {
+                        const start = event.start.dateTime || event.start.date;
+                        console.log(`${start} - ${event.summary} - ${event.description}`);
+                    });
+
                     //obtengo la hora final de la última cita 
 
                     let fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
