@@ -67,7 +67,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
 }
 
 
-function getHoraDisponible(dia) {
+function getHoraDisponible(dia, idUser) {
 
     console.log(`Moment type: ${moment}`);
     let actual = moment().toDate();
@@ -121,6 +121,13 @@ function getHoraDisponible(dia) {
                 }
                 //si hay eventos
                 if (events.length) {
+                    //reviso si el paciente ya tiene un evento para ese día
+                    events.map((event, i) => {
+                        if (event.description === idUser.substring(0, 16)) {
+                            resolve('Ya tienes una cita agendada para ese día');
+                            console.log('Ya tiene una cita agendada');
+                        }
+                    });
                     console.log(`Èventos hoy: ${events}`);
                     //obtengo la hora final de la última cita 
 
@@ -301,6 +308,9 @@ function getHoraDisponible(dia) {
     console.log('Hora fin cita', finCita);*/
 
 }
+
+
+
 
 module.exports = {
     createCalendarEvent,

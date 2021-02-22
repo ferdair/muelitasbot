@@ -20,7 +20,7 @@ function DiasDisponibles() {
     let idxDay = week.indexOf(eqDay);
     console.log(`Coincide: ${eqDay} índice: ${idxDay}`);
 
-    //si la hora actual está entre las 8 am y 3pm tambien se añade el dia actual 
+    //si la hora actual está entre las 6 am y 3pm tambien se añade el dia actual 
     if (hour >= 6 && hour < 16) {
         var tdy = today.format('dddd D');
         var tdyReply = {

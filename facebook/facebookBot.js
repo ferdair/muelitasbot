@@ -235,25 +235,33 @@ async function handleDialogFlowAction(
             console.log('Dia a consultar: ', diaAConsultar);
 
             getHoraDisponible(diaAConsultar).then((fecha) => {
-                //formatear fecha
-                let fechaDisp = moment(fecha).format('LLLL');
 
-                console.log(`Fecha para cita desde bot: ${fecha}`);
-                console.log(`Fecha casteada: ${fechaDisp}`);
-                //sendTextMessage(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `);
-                sendQuickReply(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `, [{
-                        "content_type": "text",
-                        "title": "Si",
-                        "payload": "Si",
-                        "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/1200px-Check_green_icon.svg.png"
-                    },
-                    {
-                        "content_type": "text",
-                        "title": "No",
-                        "payload": "No",
-                        "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
-                    }
-                ]);
+                if (typeof fecha === 'string') {
+                    console.log(`Valor decuelto en la promesa: ${fecha}`);
+                    sendTextMessage(sender, fecha);
+                } else {
+                    //formatear fecha
+                    let fechaDisp = moment(fecha).format('LLLL');
+
+                    console.log(`Fecha para cita desde bot: ${fecha}`);
+                    console.log(`Fecha casteada: ${fechaDisp}`);
+                    //sendTextMessage(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `);
+                    sendQuickReply(sender, `Te podemos agendar una cita el día ${fechaDisp}. ¿Desea aceptar la cita? `, [{
+                            "content_type": "text",
+                            "title": "Si",
+                            "payload": "Si",
+                            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/1200px-Check_green_icon.svg.png"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "No",
+                            "payload": "No",
+                            "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
+                        }
+                    ]);
+                }
+
+
             })
 
 
