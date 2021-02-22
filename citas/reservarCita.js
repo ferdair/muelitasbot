@@ -121,6 +121,7 @@ function getHoraDisponible(dia, idUser) {
                 }
                 //si hay eventos
                 if (events.length) {
+                    console.log(`Id del usuario: ${idUser}`);
                     //reviso si el paciente ya tiene un evento para ese día
                     events.map((event, i) => {
                         let id = idUser.substring(0, 16);
