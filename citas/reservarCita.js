@@ -123,9 +123,10 @@ function getHoraDisponible(dia, idUser) {
                 if (events.length) {
                     //reviso si el paciente ya tiene un evento para ese día
                     events.map((event, i) => {
-                        if (event.description === idUser.substring(0, 16)) {
-                            resolve('Ya tienes una cita agendada para ese día');
+                        let id = idUser.substring(0, 16);
+                        if (event.description === id) {
                             console.log('Ya tiene una cita agendada');
+                            resolve('Ya tienes una cita agendada para ese día');
                         }
                     });
                     console.log(`Èventos hoy: `);
