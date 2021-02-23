@@ -204,6 +204,13 @@ function getHoraDisponible(dia, idUser) {
                 let events = res.data.items;
                 //si hay eventos y no es hoy
                 if (events.length) {
+                    events.map((event, i) => {
+                        let id = idUser;
+                        if (event.description.substring(0, 16) === id) {
+                            console.log('Ya tiene una cita agendada');
+                            resolve('Ya tienes una cita agendada para ese día');
+                        }
+                    });
                     console.log(`Hay eventos pero no es hoy`);
                     let fechaHoraUltimaCita = new Date(events[events.length - 1].end.dateTime || events[events.length - 1].end.date); // fecha hora ultima cita
                     fechaHoraAgendar = new Date(fechaHoraUltimaCita.setMinutes(fechaHoraUltimaCita.getMinutes() + 1));
