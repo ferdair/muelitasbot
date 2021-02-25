@@ -15,7 +15,7 @@ const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
 const dias = require("../citas/diasDisponibles");
-const { createCalendarEvent, getHoraDisponible } = require("../citas/reservarCita");
+const { createCalendarEvent, getHoraDisponible, getCitaACancelar } = require("../citas/reservarCita");
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -298,7 +298,28 @@ async function handleDialogFlowAction(
 
             break;
 
-
+        case "CancelarCita.action":
+            getCitaACancelar.then(resp => {
+                console.log(`Respuesta de la promesa: ${resp}`);
+                if (resp !== 'No tienes citas agendadas') {
+                    sendTextMessage(sender, resp);
+                    sendQuickReply(sender, `¿Deseas cancelar la cita? `, [{
+                            "content_type": "text",
+                            "title": "Si",
+                            "payload": "Si cancelar",
+                            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/1200px-Check_green_icon.svg.png"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "No",
+                            "payload": "No cancelar",
+                            "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
+                        }
+                    ]);
+                }
+                sendTextMessage(sender, resp);
+            })
+            break;
         default:
             //unhandled action, just send back the text
             handleMessages(messages, sender);

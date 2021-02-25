@@ -323,10 +323,43 @@ function getHoraDisponible(dia, idUser) {
 
 }
 
+//cancelar cita 
+function getCitaACancelar(idUser) {
 
+    let actual = moment().toDate(); //hora actual desde donde se buscará la cita
+
+    return new Promise((resolve, reject) => {
+        calendar.events.list({
+            auth: serviceAccountAuth, // List events for time period
+            calendarId: calendarId,
+            timeMin: actual.toISOString()
+        }, (err, response) => {
+            if (err) {
+                reject(console.error(`Error en la solicitud a la API: ${err}`));
+            } else {
+                let eventos = response.data.items;
+
+                if (eventos.length > 0) {
+                    eventos.map((event, i) => {
+                        let id = idUser;
+                        if (event.description.substring(0, 16) === id) {
+                            let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
+                            resolve(strEvent);
+                        }
+                        resolve(`No tienes citas agendadas`);
+                    });
+                } else {
+                    resolve(`No tienes citas agendadas`);
+                }
+            }
+
+        })
+    })
+}
 
 
 module.exports = {
     createCalendarEvent,
-    getHoraDisponible
+    getHoraDisponible,
+    getCitaACancelar
 }
