@@ -299,7 +299,7 @@ async function handleDialogFlowAction(
             break;
 
         case "CancelarCita.action":
-            getCitaACancelar.then(resp => {
+            getCitaACancelar(sender).then(resp => {
                 console.log(`Respuesta de la promesa: ${resp}`);
                 if (resp !== 'No tienes citas agendadas') {
                     sendTextMessage(sender, resp);
