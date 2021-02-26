@@ -300,7 +300,7 @@ async function handleDialogFlowAction(
 
         case "CancelarCita.action":
             getCitaACancelar(sender).then(resp => {
-                console.log(`Respuesta de la promesa: ${resp}`);
+                console.log(`Respuesta de la promesa: ${JSON.stringify(resp)}`);
                 if (resp.hayCita) {
                     sendTextMessage(sender, resp.text);
                     sendQuickReply(sender, `¿Deseas cancelar la cita? `, [{
