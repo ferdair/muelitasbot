@@ -334,6 +334,14 @@ function getCitaACancelar(idUser) {
             calendarId: calendarId,
             timeMin: actual.toISOString()
         }, (err, response) => {
+            let tieneCita = false;
+            let resp = {
+
+                hayCita: false,
+                text: `No tienes citas agendadas}`
+
+            };
+
             if (err) {
                 reject(console.error(`Error en la solicitud a la API: ${err}`));
             } else {
@@ -342,14 +350,22 @@ function getCitaACancelar(idUser) {
                 if (eventos.length > 0) {
                     eventos.map((event, i) => {
                         let id = idUser;
+                        //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
-                            let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
-                            resolve(strEvent);
+                            resp = {
+                                hayCita: true,
+                                text: `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`
+                            }
+
+                            //let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
+                            resolve(resp);
                         }
-                        resolve(`No tienes citas agendadas`);
+
+                        resolve(resp);
                     });
                 } else {
-                    resolve(`No tienes citas agendadas`);
+
+                    resolve(resp);
                 }
             }
 
