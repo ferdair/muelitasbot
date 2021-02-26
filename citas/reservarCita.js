@@ -353,11 +353,10 @@ function getCitaACancelar(idUser) {
                         //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
                             resp = {
-                                hayCita: true,
-                                text: `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`
-                            }
-
-                            //let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
+                                    hayCita: true,
+                                    text: `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`
+                                }
+                                //let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
                             resolve(resp);
                         }
 
