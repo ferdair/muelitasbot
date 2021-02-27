@@ -302,8 +302,8 @@ async function handleDialogFlowAction(
             getCitaACancelar(sender).then(resp => {
                 console.log(`Respuesta de la promesa: ${JSON.stringify(resp)}`);
                 if (resp.hayCita) {
-                    sendTextMessage(sender, resp.text);
-                    sendQuickReply(sender, `¿Deseas cancelar la cita? `, [{
+                    //sendTextMessage(sender, resp.text);
+                    sendQuickReply(sender, `${resp.text}. ¿Deseas cancelar la cita? `, [{
                             "content_type": "text",
                             "title": "Si",
                             "payload": "Si cancelar",
@@ -315,7 +315,7 @@ async function handleDialogFlowAction(
                             "payload": "No cancelar",
                             "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
                         }
-                    ]);
+                    ].catch(err => { console.error('No se pudo enviar quick replie para confirmar la cancelacion ', err); }));
                 }
                 sendTextMessage(sender, resp.text);
             })
