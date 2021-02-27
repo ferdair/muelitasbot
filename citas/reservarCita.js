@@ -353,7 +353,7 @@ function getCitaACancelar(idUser) {
                         //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
                             //let fechaHoraCita = new Date(events[event.length - 1].end.dateTime || event[event.length - 1].end.date)
-                            console.log(`Cita a cancelar: ${JSON.stringify(event)}`);
+                            console.log(`Cita a cancelar:Título: ${event.summary} - Inicio${(event.start.dateTime)}`);
                             resp = {
                                     hayCita: true,
                                     text: `Tienes una cita agendada el día ${moment(event.start.dateTime || event.start.date ).format('LLLL')}`
