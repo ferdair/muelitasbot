@@ -316,8 +316,10 @@ async function handleDialogFlowAction(
                             "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
                         }
                     ]);
+                } else {
+                    sendTextMessage(sender, resp.text);
                 }
-                sendTextMessage(sender, resp.text);
+
             })
             break;
         default:
