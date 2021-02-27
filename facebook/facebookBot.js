@@ -315,7 +315,7 @@ async function handleDialogFlowAction(
                             "payload": "No cancelar",
                             "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
                         }
-                    ].catch(err => { console.error('No se pudo enviar quick replie para confirmar la cancelacion ', err); }));
+                    ]);
                 }
                 sendTextMessage(sender, resp.text);
             })
