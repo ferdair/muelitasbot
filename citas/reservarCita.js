@@ -346,27 +346,40 @@ function getCitaACancelar(idUser) {
                 reject(console.error(`Error en la solicitud a la API: ${err}`));
             } else {
                 let eventos = response.data.items;
-
+                let citasUsuario = [];
                 if (eventos.length > 0) {
+                    //recorre todos los eventos en el calendario
                     eventos.map((event, i) => {
                         let id = idUser;
                         //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
-                            //let fechaHoraCita = new Date(events[event.length - 1].end.dateTime || event[event.length - 1].end.date)
-                            console.log(`Evento/s: ${event}`);
-                            console.log(`Cita a cancelar:Título: ${event.summary} - Inicio${(event.start.dateTime)}`);
+                            //agrego las citas del usuario a este arreglo
+                            citasUsuario.push(event);
+                            /*console.log(`Evento/s: `);
+                            console.log(`Cita a cancelar: ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
                             resp = {
                                     hayCita: true,
                                     text: `Tienes una cita agendada el día ${moment(event.start.dateTime || event.start.date ).format('LLLL')}`
                                 }
                                 //let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
-                            resolve(resp);
+                            resolve(resp);*/
                         }
-
-                        resolve(resp);
                     });
-                } else {
 
+                    console.log(`Eventos del usuario/a: `);
+                    citasUsuario.map((event, i) => {
+                        console.log(` ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
+                    });
+
+                    //si hay mas de una cita
+                    if (citasUsuario.length > 1) {
+                        resp.hayCita = true;
+                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[length -1].start.dateTime || citasUsuario[length -1].start.date ).format('LLLL')}`
+                        resolve(resp);
+                    }
+
+
+                } else {
                     resolve(resp);
                 }
             }
