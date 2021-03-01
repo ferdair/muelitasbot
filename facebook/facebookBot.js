@@ -15,7 +15,7 @@ const config = require("../server/config/credentials");
 const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
 const dias = require("../citas/diasDisponibles");
-const { createCalendarEvent, getHoraDisponible, getCitaACancelar } = require("../citas/reservarCita");
+const { createCalendarEvent, getHoraDisponible, getCitaACancelar, cancelarCita } = require("../citas/reservarCita");
 
 //modelos
 const ChatbotUser = require("../server/models/paciente");
@@ -322,6 +322,21 @@ async function handleDialogFlowAction(
 
             })
             break;
+
+        case "Cancelarunacita.Cancelarunacita-yes":
+            getCitaACancelar(sender).then(resp => {
+
+                if (resp.id != null) {
+                    cancelarCita(resp.id).then(resp => {
+                        console.log(`Respuesta de la promesa para cancelar: \n 
+                        ${resp}`);
+                    })
+                }
+
+            });
+
+            break;
+
         default:
             //unhandled action, just send back the text
             handleMessages(messages, sender);

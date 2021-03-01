@@ -8,6 +8,7 @@ moment.tz('America/Guayaquil').format();
 // Import the Dialogflow module from Google client libraries.
 //const functions = require('firebase-functions');
 const { google } = require('googleapis');
+const { PromiseProvider } = require('mongoose');
 //const { WebhookClient } = require('dialogflow-fulfillment');
 
 // Enter your calendar ID below and service account JSON below
@@ -327,7 +328,6 @@ function getHoraDisponible(dia, idUser) {
 function getCitaACancelar(idUser) {
 
     let actual = moment().toDate(); //hora actual desde donde se buscará la cita
-
     return new Promise((resolve, reject) => {
         calendar.events.list({
             auth: serviceAccountAuth, // List events for time period
@@ -336,7 +336,7 @@ function getCitaACancelar(idUser) {
         }, (err, response) => {
 
             let resp = {
-
+                id: null,
                 hayCita: false,
                 text: `No tienes citas agendadas`
 
@@ -353,20 +353,10 @@ function getCitaACancelar(idUser) {
                         let id = idUser;
                         //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
-                            //agrego las citas del usuario a este arreglo
                             citasUsuario.push(event);
-                            /*console.log(`Evento/s: `);
-                            console.log(`Cita a cancelar: ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
-                            resp = {
-                                    hayCita: true,
-                                    text: `Tienes una cita agendada el día ${moment(event.start.dateTime || event.start.date ).format('LLLL')}`
-                                }
-                                //let strEvent = `Tienes una cita agendada el día ${moment(event.start).format('LLLL')}`;
-                            resolve(resp);*/
                         }
                     });
-                    console.log('Arreglo de eventos');
-                    console.log(JSON.stringify(citasUsuario));
+
                     console.log(`Eventos del usuario/a: `);
                     citasUsuario.map((event, i) => {
                         console.log(` ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
@@ -375,10 +365,12 @@ function getCitaACancelar(idUser) {
                     if (citasUsuario.length > 1) {
                         resp.hayCita = true;
                         resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[citasUsuario.length -1].start.dateTime || citasUsuario[citasUsuario.length -1].start.date ).format('LLLL')}`
+                        resp.id = citasUsuario[citasUsuario.length - 1].id;
                         resolve(resp);
                     } else {
                         resp.hayCita = true;
                         resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[0].start.dateTime || citasUsuario[0].start.date ).format('LLLL')}`
+                        resp.id = citasUsuario[0].id;
                         resolve(resp);
                     }
 
@@ -392,8 +384,42 @@ function getCitaACancelar(idUser) {
     })
 }
 
+function cancelarCita(idCita) {
+    let cita = calendar.events.get({ calendarId, eventId: idCita });
+    console.log(`Cita encontrada: ${JSON.stringify(cita)}`);
+    cita.status = 'canceled';
+
+    return new Promise((resolve, reject) => {
+        calendar.events.patch({
+            'calendarId': calendarId,
+            'eventId': idCita,
+            'resource': cita
+        }, (err, response) => {
+            if (err) {
+                console.error(`Error en la actualizcion del evento: ${err}`);
+            } else {
+                console.log(`Respuesta de la peticion para cancelar: ${response}`);
+            }
+
+        });
+    })
+
+    /*let request = calendar.events.patch({
+        'calendarId': calendarId,
+        'eventId': idCita,
+        'resource': cita
+    });
+
+    request.execute(function(cita) {
+        console.log('Cancelando cita ...');
+        console.log(cita);
+    });*/
+
+
+}
 
 module.exports = {
+    cancelarCita,
     createCalendarEvent,
     getHoraDisponible,
     getCitaACancelar
