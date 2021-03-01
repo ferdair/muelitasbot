@@ -378,7 +378,7 @@ function getCitaACancelar(idUser) {
                         resolve(resp);
                     } else {
                         resp.hayCita = true;
-                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario.start.dateTime || citasUsuario.start.date ).format('LLLL')}`
+                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[0].start.dateTime || citasUsuario[0].start.date ).format('LLLL')}`
                         resolve(resp);
                     }
 
