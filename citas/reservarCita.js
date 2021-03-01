@@ -334,7 +334,7 @@ function getCitaACancelar(idUser) {
             calendarId: calendarId,
             timeMin: actual.toISOString()
         }, (err, response) => {
-            let tieneCita = false;
+
             let resp = {
 
                 hayCita: false,
@@ -353,6 +353,7 @@ function getCitaACancelar(idUser) {
                         //si tiene citas agendadas ese día
                         if (event.description.substring(0, 16) === id) {
                             //let fechaHoraCita = new Date(events[event.length - 1].end.dateTime || event[event.length - 1].end.date)
+                            console.log(`Evento/s: ${event}`);
                             console.log(`Cita a cancelar:Título: ${event.summary} - Inicio${(event.start.dateTime)}`);
                             resp = {
                                     hayCita: true,
