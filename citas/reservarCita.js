@@ -365,16 +365,20 @@ function getCitaACancelar(idUser) {
                             resolve(resp);*/
                         }
                     });
-
+                    console.log('Arreglo de eventos');
+                    console.log(JSON.stringify(citasUsuario));
                     console.log(`Eventos del usuario/a: `);
                     citasUsuario.map((event, i) => {
                         console.log(` ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
                     });
-
                     //si hay mas de una cita
                     if (citasUsuario.length > 1) {
                         resp.hayCita = true;
                         resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[citasUsuario.length -1].start.dateTime || citasUsuario[citasUsuario.length -1].start.date ).format('LLLL')}`
+                        resolve(resp);
+                    } else {
+                        resp.hayCita = true;
+                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario.start.dateTime || citasUsuario.start.date ).format('LLLL')}`
                         resolve(resp);
                     }
 
