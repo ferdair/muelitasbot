@@ -374,7 +374,7 @@ function getCitaACancelar(idUser) {
                     //si hay mas de una cita
                     if (citasUsuario.length > 1) {
                         resp.hayCita = true;
-                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[length -1].start.dateTime || citasUsuario[length -1].start.date ).format('LLLL')}`
+                        resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[citasUsuario.length -1].start.dateTime || citasUsuario[citasUsuario.length -1].start.date ).format('LLLL')}`
                         resolve(resp);
                     }
 
