@@ -392,7 +392,7 @@ function cancelarCita(idCita) {
         console.log(`Error en el GET: ${err}`);
     });
 
-    console.log(`Evento cita obtenido con el GET: ${JSON.stringify(cita)}`);
+    //console.log(`Evento cita obtenido con el GET: ${JSON.stringify(cita)}`);
     /*
      cita.status = 'canceled';
 
