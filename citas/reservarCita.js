@@ -387,7 +387,25 @@ function getCitaACancelar(idUser) {
 function cancelarCita(idCita) {
     console.log(`ID Cita: ${idCita}`);
     calendar.events.get({ auth: serviceAccountAuth, calendarId: calendarId, eventId: idCita }).then(resp => {
-        console.log(`Respuesta a peticion get: ${JSON.stringify(resp)}`);
+        console.log(`Evento: ${JSON.stringify(resp.data)}`);
+        let cita = resp.data;
+        cita.status = 'cancelled';
+
+        calendar.events.patch({
+            auth: serviceAccountAuth,
+            calendarId: calendarId,
+            eventId: idCita,
+            resource: cita
+        }).then((err, resp) => {
+            if (err) {
+                console.log(`ERROR al cancelar evento: ${err}`);
+            } else {
+                console.log(`Evento cancelado: ${resp}`);
+            }
+        })
+
+
+
     }).catch(err => {
         console.log(`Error en el GET: ${err}`);
     });

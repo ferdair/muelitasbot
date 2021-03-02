@@ -328,6 +328,7 @@ async function handleDialogFlowAction(
 
                 if (resp.id != null) {
                     cancelarCita(resp.id);
+                    sendTextMessage(sender, 'Su cita ha sido cancelada');
                 }
 
             });
