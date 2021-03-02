@@ -385,7 +385,8 @@ function getCitaACancelar(idUser) {
 }
 
 function cancelarCita(idCita) {
-    let cita = calendar.events.get({ calendarId, eventId: idCita }).then(resp => {
+    console.log(`ID Cita: ${idCita}`);
+    calendar.events.get({ calendarId: calendarId, eventId: idCita }).then(resp => {
         console.log(`Respuesta a peticion get: ${JSON.stringify(resp)}`);
     }).catch(err => {
         console.log(`Error en el GET: ${err}`);
