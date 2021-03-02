@@ -324,16 +324,16 @@ async function handleDialogFlowAction(
             break;
 
         case "Cancelarunacita.Cancelarunacita-yes":
-            getCitaACancelar(sender).then(resp => {
+            /* getCitaACancelar(sender).then(resp => {
 
-                if (resp.id != null) {
-                    cancelarCita(resp.id).then(resp => {
-                        console.log(`Respuesta de la promesa para cancelar: \n 
-                        ${resp}`);
-                    })
-                }
+                 if (resp.id != null) {
+                     cancelarCita(resp.id).then(resp => {
+                         console.log(`Respuesta de la promesa para cancelar: \n 
+                         ${resp}`);
+                     })
+                 }
 
-            });
+             });*/
 
             break;
 
