@@ -330,7 +330,20 @@ async function handleDialogFlowAction(
 
                 if (resp.id != null) {
                     cancelarCita(resp.id);
-                    sendTextMessage(sender, 'Su cita ha sido cancelada');
+                    //sendTextMessage(sender, 'Tu cita ha sido cancelada');
+                    sendQuickReply(sender, `Tu cita ha sido cancelada. ¿Deseas reagendar tu cita?`, [{
+                            "content_type": "text",
+                            "title": "Si",
+                            "payload": "Si",
+                            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Check_green_icon.svg/1200px-Check_green_icon.svg.png"
+                        },
+                        {
+                            "content_type": "text",
+                            "title": "No",
+                            "payload": "No",
+                            "image_url": "https://w7.pngwing.com/pngs/723/887/png-transparent-computer-icons-x-mark-check-mark-red-x-miscellaneous-text-trademark-thumbnail.png"
+                        }
+                    ]);
                 }
 
             });

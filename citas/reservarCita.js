@@ -357,7 +357,9 @@ function getCitaACancelar(idUser) {
                         }
                     });
 
+                    console.log(`Objeto eventos de usuario: \n ${JSON.stringify(citasUsuario)}`);
                     console.log(`Eventos del usuario/a: `);
+
                     citasUsuario.map((event, i) => {
                         console.log(` ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
                     });
@@ -404,7 +406,7 @@ function cancelarCita(idCita) {
             resource: cita
         }).then((err, resp) => {
             if (err) {
-                console.log(`ERROR al cancelar evento: ${JSON.stringify(err)}`);
+                console.log(`ERROR al cancelar evento: ${err}`);
             } else {
                 console.log(`Evento cancelado: ${resp}`);
             }
@@ -415,37 +417,6 @@ function cancelarCita(idCita) {
     }).catch(err => {
         console.log(`Error en el GET: ${err}`);
     });
-
-    //console.log(`Evento cita obtenido con el GET: ${JSON.stringify(cita)}`);
-    /*
-     cita.status = 'canceled';
-
-     return new Promise((resolve, reject) => {
-         calendar.events.patch({
-             calendarId: calendarId,
-             eventId: idCita,
-             resource: cita
-         }, (err, response) => {
-             if (err) {
-                 console.error(`Error en la actualizcion del evento: ${err}`);
-             } else {
-                 console.log(`Respuesta de la peticion para cancelar: ${response}`);
-             }
-
-         });
-     })*/
-
-    /*let request = calendar.events.patch({
-        'calendarId': calendarId,
-        'eventId': idCita,
-        'resource': cita
-    });
-
-    request.execute(function(cita) {
-        console.log('Cancelando cita ...');
-        console.log(cita);
-    });*/
-
 
 }
 
