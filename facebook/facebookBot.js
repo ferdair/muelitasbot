@@ -270,7 +270,8 @@ async function handleDialogFlowAction(
         case "SiReservar.action": //bot pregunta por motivo
 
             console.log('Contextos: ', contexts);
-            console.log('Parametros: ', parameters.fields);
+            console.log('Parametros campos: ', parameters.fields);
+            console.log('Parametros', parameters);
             sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
             break;
 

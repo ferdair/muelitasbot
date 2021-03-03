@@ -361,8 +361,8 @@ function getCitaACancelar(idUser) {
                     citasUsuario.map((event, i) => {
                         console.log(` ID: ${event.id} - Título: ${event.summary} - Inicio ${(event.start.dateTime)}`);
                     });
-                    //si hay mas de una cita
-                    if (citasUsuario.length > 1) {
+                    //si hay mas de una cita, envio la primera que es la mas cercana a la actualidad
+                    /*if (citasUsuario.length > 1) {
                         resp.hayCita = true;
                         resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[citasUsuario.length -1].start.dateTime || citasUsuario[citasUsuario.length -1].start.date ).format('LLLL')}`
                         resp.id = citasUsuario[citasUsuario.length - 1].id;
@@ -372,7 +372,11 @@ function getCitaACancelar(idUser) {
                         resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[0].start.dateTime || citasUsuario[0].start.date ).format('LLLL')}`
                         resp.id = citasUsuario[0].id;
                         resolve(resp);
-                    }
+                    }*/
+                    resp.hayCita = true;
+                    resp.text = `Tienes una cita agendada el día ${moment(citasUsuario[0].start.dateTime || citasUsuario[0].start.date ).format('LLLL')}`
+                    resp.id = citasUsuario[0].id;
+                    resolve(resp);
 
 
                 } else {
