@@ -26,7 +26,8 @@ function DiasDisponibles() {
         var tdyReply = {
             "content_type": "text",
             "title": tdy,
-            "payload": tdy
+            "payload": tdy,
+            "image_url": "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-cartoon-calendar-notebook-material-png-image_687092.jpg"
         }
         restDays.push(tdyReply);
 
@@ -39,7 +40,8 @@ function DiasDisponibles() {
             var day = {
                     "content_type": "text",
                     "title": tdy,
-                    "payload": tdy
+                    "payload": tdy,
+                    "image_url": "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-cartoon-calendar-notebook-material-png-image_687092.jpg"
                 }
                 //console.log(today.add(1, 'days').format('dddd D'));
             restDays.push(day);
@@ -51,7 +53,8 @@ function DiasDisponibles() {
         var day = {
                 "content_type": "text",
                 "title": tdy,
-                "payload": tdy
+                "payload": tdy,
+                "image_url": "https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-cartoon-calendar-notebook-material-png-image_687092.jpg"
             }
             //console.log(today.add(1, 'days').format('dddd D'));
         restDays.push(day);

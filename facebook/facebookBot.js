@@ -16,7 +16,7 @@ const dialogflow = require("../dialogflow/dialogflow");
 const { structProtoToJson } = require("./helpers/structFunctions");
 const dias = require("../citas/diasDisponibles");
 const { createCalendarEvent, getHoraDisponible, getCitaACancelar, cancelarCita } = require("../citas/reservarCita");
-
+const { motivos } = require("../citas/motivos");
 //modelos
 const ChatbotUser = require("../server/models/paciente");
 const { findOne } = require("../server/models/paciente");
@@ -272,7 +272,8 @@ async function handleDialogFlowAction(
             console.log('Contextos: ', contexts);
             console.log('Parametros campos: ', parameters.fields);
             console.log('Parametros', parameters);
-            sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
+            //sendTextMessage(sender, `¿Puedes decirme cuál es el motivo de la cita?`);
+            sendQuickReply(sender, `¿Puedes decirme cuál es el motivo de la cita?`, motivos).catch(err => { console.error('No se pudo enviar quick replies con los motivos: ', err); });;
             break;
 
         case "Motivo.action": //cuando el paciente envia el motivo, se agenda la cita
