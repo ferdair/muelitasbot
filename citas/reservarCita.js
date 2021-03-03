@@ -357,7 +357,7 @@ function getCitaACancelar(idUser) {
                         }
                     });
 
-                    console.log(`Objeto eventos de usuario: \n ${JSON.stringify(citasUsuario)}`);
+                    //console.log(`Objeto eventos de usuario: \n ${JSON.stringify(citasUsuario)}`);
                     console.log(`Eventos del usuario/a: `);
 
                     citasUsuario.map((event, i) => {

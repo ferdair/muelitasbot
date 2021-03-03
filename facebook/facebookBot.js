@@ -350,6 +350,14 @@ async function handleDialogFlowAction(
 
             break;
 
+        case "Cancelarunacita.Cancelarunacita-no":
+            let userData = await getUserData(sender);
+            sendTextMessage(sender, `Bueno ${userData.first_name}. Entonces te esperamos 😃`)
+            break;
+
+        case "ReagendarCitaNo.action":
+            sendTextMessage(sender, `Bueno ${userData.first_name}. Estamos a la órdenes 😉`)
+            break;
         default:
             //unhandled action, just send back the text
             handleMessages(messages, sender);
