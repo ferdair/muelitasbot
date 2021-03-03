@@ -351,7 +351,7 @@ async function handleDialogFlowAction(
             break;
 
         case "Cancelarunacita.Cancelarunacita-no":
-            let userData = await getUserData(sender);
+            //let userData = await getUserData(sender);
             sendTextMessage(sender, `Bueno ${userData.first_name}. Entonces te esperamos 😃`)
             break;
 
