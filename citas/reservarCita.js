@@ -103,7 +103,7 @@ function getHoraDisponible(dia, idUser) {
     //si es hoy
     if (esHoy) {
         //si está preguntando después del fin del horario
-        if (dentroDeHorario === 1) {
+        if (dentroDeHorario() === 1) {
             return false;
         }
         return new Promise((resolve, reject) => {
@@ -183,7 +183,7 @@ function getHoraDisponible(dia, idUser) {
                 } else { //no hay eventos y es hoy
                     console.log(`No hay eventos hoy`);
                     //si está preguntando antes del inicio del horario
-                    if (dentroDeHorario === -1) {
+                    if (dentroDeHorario() === -1) {
                         fechaHoraAgendar = new Date(moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 }));
                     } else {
                         fechaHoraAgendar = new Date(actual.setMinutes(actual.getMinutes() + 20));
