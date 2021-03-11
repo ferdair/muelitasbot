@@ -103,9 +103,7 @@ function getHoraDisponible(dia, idUser) {
     //si es hoy
     if (esHoy) {
         //si está preguntando después del fin del horario
-        if (dentroDeHorario() === 1) {
-            return false;
-        }
+
         return new Promise((resolve, reject) => {
             let fechaHoraAgendar;
 
@@ -121,6 +119,10 @@ function getHoraDisponible(dia, idUser) {
 
                 if (err) {
                     reject(console.log('The API returned an error: ' + err));
+                }
+                //si está preguntando después del fin del horario
+                if (dentroDeHorario() === 1) {
+                    reject(false);
                 }
                 //si hay eventos
                 if (events.length) {
