@@ -238,6 +238,7 @@ async function handleDialogFlowAction(
 
                 if (fecha !== false) {
                     sendTextMessage(sender, 'Ya no te podemos agendar una cita para hoy');
+                    return;
                 }
 
                 if (typeof fecha === 'string') {
