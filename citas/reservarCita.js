@@ -122,7 +122,7 @@ function getHoraDisponible(dia, idUser) {
                 }
                 //si está preguntando después del fin del horario
                 if (dentroDeHorario() === 1) {
-                    reject(false);
+                    resolve(false);
                 }
                 //si hay eventos
                 if (events.length) {
