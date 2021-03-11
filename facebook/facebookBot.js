@@ -236,8 +236,12 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(diaAConsultar, sender).then((fecha) => {
 
+                if (fecha !== false) {
+                    sendTextMessage(sender, 'Ya no te podemos agendar una cita para hoy');
+                }
+
                 if (typeof fecha === 'string') {
-                    console.log(`Valor decuelto en la promesa: ${fecha}`);
+                    console.log(`Valor devuelto en la promesa: ${fecha}`);
                     sendTextMessage(sender, fecha);
                 } else {
                     //formatear fecha

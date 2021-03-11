@@ -63,6 +63,32 @@ function DiasDisponibles() {
     return JSON.stringify(restDays);
 }
 
+//funcion para respoder según si es hoy y es
+function dentroDeHorario() {
+    //fecha y hora actual
+    let ahora = moment();
+
+    let inicioHorario = moment().set({ hour: 9, minute: 0, second: 0, millisecond: 0 });
+    let finHorario = moment().set({ hour: 19, minute: 0, second: 0, millisecond: 0 });
+
+    console.log(`Ahora ${ahora}`);
+    console.log(`HORARIO: Desde ${inicioHorario} - Hasta ${finHorario}`);
+
+    if (ahora.isBefore(inicioHorario)) {
+        console.log('Esta preguntando nntes dela hora de inicio');
+        return -1;
+    }
+    if (ahora.isAfter(finHorario)) {
+        console.log('Esta perguntando despues de la hora de final');
+        return 1
+    }
+    if (ahora.isBetween(inicioHorario, finHorario)) {
+        console.log(`Esta perguntando dentro del horario`);
+        return 0;
+    }
+}
+
 module.exports = {
-    DiasDisponibles
+    DiasDisponibles,
+    dentroDeHorario
 }

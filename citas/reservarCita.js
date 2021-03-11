@@ -1,5 +1,6 @@
 const axios = require('axios');
 const moment = require('moment-timezone');
+const { dentroDeHorario } = require('./diasDisponibles')
 moment.tz('America/Guayaquil').format();
 
 
@@ -101,6 +102,10 @@ function getHoraDisponible(dia, idUser) {
 
     //si es hoy
     if (esHoy) {
+        //si la hora actual no está dentro del horario
+        if (dentroDeHorario === 1) {
+            return false;
+        }
         return new Promise((resolve, reject) => {
             let fechaHoraAgendar;
 
