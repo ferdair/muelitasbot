@@ -269,8 +269,6 @@ async function handleDialogFlowAction(
 
 
             })
-
-
             break;
 
         case "SiReservar.action": //bot pregunta por motivo
