@@ -233,13 +233,13 @@ async function handleDialogFlowAction(
             //let timeZoneOffset = '-05:00';
             let diaAConsultar = new Date(Date.parse(strFecha.split('T')[0] + 'T' + strFecha.split('T')[1].split('-')[0] + '-05:00'));
             console.log('Dia a consultar: ', diaAConsultar);
-
+            if (dias.dentroDeHorario === 1) {
+                sendTextMessage(sender, 'Ya no te podemos agendar una cita hoy');
+                return;
+            }
             getHoraDisponible(diaAConsultar, sender).then((fecha) => {
 
-                if (dias.dentroDeHorario === 1) {
-                    sendTextMessage(sender, 'Ya no te podemos agendar una cita hoy');
-                    return;
-                }
+
                 if (typeof fecha === 'string') {
                     console.log(`Valor devuelto en la promesa: ${fecha}`);
                     sendTextMessage(sender, fecha);
