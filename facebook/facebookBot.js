@@ -236,7 +236,10 @@ async function handleDialogFlowAction(
 
             getHoraDisponible(diaAConsultar, sender).then((fecha) => {
 
-
+                if (dias.dentroDeHorario === 1) {
+                    sendTextMessage(sender, 'Ya no te podemos agendar una cita hoy');
+                    return;
+                }
                 if (typeof fecha === 'string') {
                     console.log(`Valor devuelto en la promesa: ${fecha}`);
                     sendTextMessage(sender, fecha);
