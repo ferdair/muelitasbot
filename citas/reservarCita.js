@@ -68,7 +68,7 @@ function createCalendarEvent(dateTimeStart, dateTimeEnd, appointment_type, idUse
     });
 }
 
-
+//calcula una hora para agendar una cita dependiendo de la disponibilidad del horario
 function getHoraDisponible(dia, idUser) {
 
     console.log(`Moment type: ${moment}`);
